@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class TileBase : MonoBehaviour {
     protected float HP;
-    protected TileTypes TileType;
+    public TileTypes TileType;
     protected bool IsDestroyed;
-
+    public Mesh mesh;
+    
     // Use this for initialization
     void Start ()
     {
-
 	}
 
     public void Initialize(TileTypes type)

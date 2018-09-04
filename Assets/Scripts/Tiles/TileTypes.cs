@@ -4,11 +4,11 @@ using UnityEngine;
 
 public enum TileTypes
 {
-    Building,
-    Path,
-    Dirt,
-    Rock,
-    Lava,
-    Water,
-    Gem
+    Dirt = 0,
+    Rock = 1,
+    Gem = 2,
+    Path = 3,
+    Lava = 4,
+    Water = 5,
+    Building = 6
 }
