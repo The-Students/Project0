@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingTile : TileBase {
+public class GameBase : MonoBehaviour {
+
 	// Use this for initialization
 	void Start ()
     {
