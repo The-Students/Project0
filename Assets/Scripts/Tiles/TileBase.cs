@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class TileBase : MonoBehaviour {
     protected float HP;
+    protected TileTypes TileType;
     protected bool IsDestroyed;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
-		
+
 	}
+
+    public void Initialize(TileTypes type)
+    {
+        TileType = type;
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -33,4 +39,15 @@ public class TileBase : MonoBehaviour {
     {
         return HP;
     }
+
+    void SetID(TileTypes type)
+    {
+        TileType = type;
+    }
+
+    TileTypes GetID()
+    {
+        return TileType;
+    }
+
 }
