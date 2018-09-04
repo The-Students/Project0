@@ -113,6 +113,98 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &435865460
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 435865462}
+  - component: {fileID: 435865461}
+  m_Layer: 0
+  m_Name: Root
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &435865461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 435865460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 384cc0c8d8a6b444490fe20ad9cd75fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileManager: {fileID: 619961848}
+--- !u!4 &435865462
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 435865460}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.384345, y: -51.895065, z: 59.54349}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 619961849}
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &619961847
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 619961849}
+  - component: {fileID: 619961848}
+  m_Layer: 0
+  m_Name: TileManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &619961848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 619961847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61b4c7087478bed439bf3a126440799d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  DefaultMat: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  DirtMat: {fileID: 2100000, guid: f21e6e668ec058b4591097402d5517f0, type: 2}
+  RockMat: {fileID: 2100000, guid: 228fde5591047d547ac9002f268fcd01, type: 2}
+  GemMat: {fileID: 2100000, guid: 7debcaf0e5e33e54da3cfac7601a76af, type: 2}
+  WaterMat: {fileID: 2100000, guid: 523b28791884ec043985a72d66026b05, type: 2}
+  LavaMat: {fileID: 2100000, guid: 05d4b5585e2fa2742b6bf33236b12d11, type: 2}
+  BuildingMat: {fileID: 2100000, guid: 5500c1b76086f7f4bac1de3a2238945e, type: 2}
+  PathMat: {fileID: 2100000, guid: 1cedaf7123ec8674baee32c33deecca3, type: 2}
+  MapFile: {fileID: 4900000, guid: a669a00c74bc6dd49898b72823c0cf53, type: 3}
+--- !u!4 &619961849
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 619961847}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 435865462}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1072571390
 GameObject:
   m_ObjectHideFlags: 0
