@@ -650,7 +650,7 @@ PlayerSettings:
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
   cloudProjectId: fa127610-804a-497e-899d-f6a140fc6629
-  projectName: Project0 (1)
+  projectName: Project0
   organizationId: thestudents
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
