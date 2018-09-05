@@ -5,25 +5,17 @@ using UnityEngine;
 public class TileManager : MonoBehaviour {
 
     private GameObject[,] Tiles;
+    private TileBase[,] TileScripts;
     private uint MapSize;
     private string MapText;
-    public Mesh DefaultMesh;
-    //public Mesh DirtMesh;
-    //public Mesh RockMesh;
-    //public Mesh GemMesh;
-    //public Mesh WaterMesh;
-    //public Mesh LavaMesh;
-    //public Mesh BuildingMesh;
-    //public Mesh PathMesh;
-    public Material DefaultMat;
-    public Material DirtMat;
-    public Material RockMat;
-    public Material GemMat;
-    public Material WaterMat;
-    public Material LavaMat;
-    public Material BuildingMat;
-    public Material PathMat;
     public TextAsset MapFile;
+    public GameObject PrefabDirt;
+    public GameObject PrefabRock;
+    public GameObject PrefabGem;
+    public GameObject PrefabWater;
+    public GameObject PrefabLava;
+    public GameObject PrefabPath;
+    public GameObject PrefabRoom;
 
     // Use this for initialization
     void Start ()
@@ -40,77 +32,55 @@ public class TileManager : MonoBehaviour {
 
         //MapSize = mapsize;
         Tiles = new GameObject[MapSize, MapSize];
+        TileScripts = new TileBase[MapSize, MapSize];
+
+        //CREATE TILES
         for (int y = (int)MapSize - 1; y >= 0; --y)
         {
             for (int x = 0; x < MapSize; ++x)
             {
                 TileTypes type;
-                Tiles[x, y] = new GameObject();
-                Tiles[x, y].name = "TileX" + x + "Y" + y;
-                Tiles[x, y].AddComponent<TileBase>();
-                Tiles[x, y].GetComponent<TileBase>().Initialize(type = (TileTypes)int.Parse(MapText.Substring(0, index = MapText.IndexOf('.'))));
+                type = (TileTypes)int.Parse(MapText.Substring(0, index = MapText.IndexOf('.')));
                 MapText = MapText.Substring(index + 1);
-
-                //TO-DO Change With Meshes
                 switch (type)
                 {
                     case TileTypes.Dirt:
+                        Tiles[x, y] = Instantiate(PrefabDirt);
+                        TileScripts[x, y] = Tiles[x, y].GetComponent<TileDirt>();
+                        break;
                     case TileTypes.Rock:
+                        Tiles[x, y] = Instantiate(PrefabRock);
+                        TileScripts[x, y] = Tiles[x, y].GetComponent<TileRock>();
+                        break;
                     case TileTypes.Gem:
-                        Tiles[x, y].transform.Translate((x - (MapSize / 2.0f)) * tilesize, tilesize / 2.0f, (y - (MapSize / 2.0f)) * tilesize);
-                        Tiles[x, y].transform.localScale = new Vector3(tilesize, tilesize, tilesize);
+                        Tiles[x, y] = Instantiate(PrefabGem);
+                        TileScripts[x, y] = Tiles[x, y].GetComponent<TileGem>();
                         break;
                     case TileTypes.Path:
+                        Tiles[x, y] = Instantiate(PrefabPath);
+                        TileScripts[x, y] = Tiles[x, y].GetComponent<TileFloor>();
+                        break;
                     case TileTypes.Lava:
+                        Tiles[x, y] = Instantiate(PrefabLava);
+                        TileScripts[x, y] = Tiles[x, y].GetComponent<TileLava>();
+                        break;
                     case TileTypes.Water:
-                        Tiles[x, y].transform.Translate((x - (MapSize / 2.0f)) * tilesize, tilesize / 2.0f - tilesize / 2.0f, (y - (MapSize / 2.0f)) * tilesize);
-                        Tiles[x, y].transform.localScale = new Vector3(tilesize, tilesize / 10, tilesize);
+                        Tiles[x, y] = Instantiate(PrefabWater);
+                        TileScripts[x, y] = Tiles[x, y].GetComponent<TileWater>();
                         break;
                     case TileTypes.Building:
-                        Tiles[x, y].transform.Translate((x - (MapSize / 2.0f)) * tilesize, tilesize / 2.0f, (y - (MapSize / 2.0f)) * tilesize);
-                        Tiles[x, y].transform.localScale = new Vector3(tilesize, tilesize, tilesize);
+                        Tiles[x, y] = Instantiate(PrefabRoom);
+                        TileScripts[x, y] = Tiles[x, y].GetComponent<TileBuilding>();
                         break;
                     default:
-                        Tiles[x, y].transform.Translate((x - (MapSize / 2.0f)) * tilesize, tilesize / 2.0f, (y - (MapSize / 2.0f)) * tilesize);
-                        Tiles[x, y].transform.localScale = new Vector3(tilesize, tilesize, tilesize);
+                        Tiles[x, y] = Instantiate(PrefabDirt);
+                        TileScripts[x, y] = Tiles[x, y].GetComponent<TileDirt>();
                         break;
                 }
-
+                Tiles[x, y].name = "TileX" + x + "Y" + y;
+                Tiles[x, y].transform.Translate((x - (MapSize / 2.0f)) * tilesize, 0.0f, (y - (MapSize / 2.0f)) * tilesize);
+                Tiles[x, y].transform.localScale = new Vector3(tilesize, tilesize, tilesize);
                 Tiles[x, y].transform.parent = transform;
-                Tiles[x, y].AddComponent<MeshFilter>();
-                Tiles[x, y].GetComponent<MeshFilter>().mesh = DefaultMesh;
-                Tiles[x, y].AddComponent<MeshRenderer>();
-
-                switch (type)
-                {
-                    case TileTypes.Dirt:
-                        Tiles[x, y].GetComponent<MeshRenderer>().material = DirtMat;
-                        break;
-                    case TileTypes.Rock:
-                        Tiles[x, y].GetComponent<MeshRenderer>().material = RockMat;
-                        break;
-                    case TileTypes.Gem:
-                        Tiles[x, y].GetComponent<MeshRenderer>().material = GemMat;
-                        break;
-                    case TileTypes.Path:
-                        Tiles[x, y].GetComponent<MeshRenderer>().material = PathMat;
-                        break;
-                    case TileTypes.Lava:
-                        Tiles[x, y].GetComponent<MeshRenderer>().material = LavaMat;
-                        break;
-                    case TileTypes.Water:
-                        Tiles[x, y].GetComponent<MeshRenderer>().material = WaterMat;
-                        break;
-                    case TileTypes.Building:
-                        Tiles[x, y].GetComponent<MeshRenderer>().material = BuildingMat;
-                        break;
-                    default:
-                        Tiles[x, y].GetComponent<MeshRenderer>().material = DefaultMat;
-                        break;
-                }
-
-                Tiles[x, y].AddComponent<BoxCollider>();
-                //Tiles[x, y].GetComponent<BoxCollider>().size = new Vector3(tilesize, tilesize, tilesize);
             }
         }
     }
@@ -118,6 +88,5 @@ public class TileManager : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-		
-	}
+    }
 }
