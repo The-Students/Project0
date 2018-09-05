@@ -55,6 +55,11 @@ public class CameraBase : MonoBehaviour {
             pos.x += _CameraSpeed;
             transform.position = pos;
         }
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            Quaternion rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, transform.rotation.z);
+        }
     }
 
     private void CheckMouse()
@@ -87,4 +92,5 @@ public class CameraBase : MonoBehaviour {
             transform.position = pos;
         }
     }
+
 }
