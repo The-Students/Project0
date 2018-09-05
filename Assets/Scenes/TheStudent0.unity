@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -148,7 +148,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 435865460}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 4.384345, y: -51.895065, z: 59.54349}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 619961849}
@@ -182,15 +182,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b4c7087478bed439bf3a126440799d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DefaultMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  DefaultMat: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  DirtMat: {fileID: 2100000, guid: f21e6e668ec058b4591097402d5517f0, type: 2}
+  RockMat: {fileID: 2100000, guid: 228fde5591047d547ac9002f268fcd01, type: 2}
+  GemMat: {fileID: 2100000, guid: 7debcaf0e5e33e54da3cfac7601a76af, type: 2}
+  WaterMat: {fileID: 2100000, guid: 523b28791884ec043985a72d66026b05, type: 2}
+  LavaMat: {fileID: 2100000, guid: 05d4b5585e2fa2742b6bf33236b12d11, type: 2}
+  BuildingMat: {fileID: 2100000, guid: 5500c1b76086f7f4bac1de3a2238945e, type: 2}
+  PathMat: {fileID: 2100000, guid: 1cedaf7123ec8674baee32c33deecca3, type: 2}
   MapFile: {fileID: 4900000, guid: a669a00c74bc6dd49898b72823c0cf53, type: 3}
-  PrefabDirt: {fileID: 1100424225270532, guid: 575102e37d49ce848a254111140fdb49, type: 2}
-  PrefabRock: {fileID: 1405359973330952, guid: fc4285ef8e2c3da40a32af7bd52a23f3, type: 2}
-  PrefabGem: {fileID: 1934580106688332, guid: 372626e8a0e71cf409d4f91daf49b645, type: 2}
-  PrefabWater: {fileID: 1331636991873880, guid: 258f1c04a6bff4c47a6a3878fe1a747f,
-    type: 2}
-  PrefabLava: {fileID: 1921820318846156, guid: 0b2a40e3466be90489e20f785d07f587, type: 2}
-  PrefabPath: {fileID: 1826708721588372, guid: 40da8001aa3a7fe4987d7810700853e4, type: 2}
-  PrefabRoom: {fileID: 1207869815117850, guid: 65042e0d8826f884ba8ba254846dc0f0, type: 2}
 --- !u!4 &619961849
 Transform:
   m_ObjectHideFlags: 0
@@ -214,6 +215,7 @@ GameObject:
   - component: {fileID: 1072571393}
   - component: {fileID: 1072571392}
   - component: {fileID: 1072571391}
+  - component: {fileID: 1072571394}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -274,13 +276,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1072571390}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.46174863, y: 0, z: 0, w: 0.8870109}
+  m_LocalPosition: {x: 0, y: 50, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 55, y: 0, z: 0}
+--- !u!114 &1072571394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1072571390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d61b3d144b72534a8686036e1492710, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _CameraSpeed: 1
 --- !u!1 &1586785073
 GameObject:
   m_ObjectHideFlags: 0
