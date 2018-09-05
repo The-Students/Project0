@@ -8,7 +8,6 @@ public class TileBase : MonoBehaviour {
     protected bool IsDestroyed = false;
     protected TileBase[] AdjacentTiles = new TileBase[4];
     protected bool IsFlat = false;
-    protected EmptySides EmptySides;
 
     // Use this for initialization
     protected virtual void Start ()
@@ -46,5 +45,11 @@ public class TileBase : MonoBehaviour {
     public bool GetIsFlat()
     {
         return IsFlat;
+    }
+
+
+    public void SetAdjacent(Direction dir, TileBase tile)
+    {
+        AdjacentTiles[(int)dir] = tile;
     }
 }

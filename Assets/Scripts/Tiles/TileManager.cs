@@ -83,7 +83,28 @@ public class TileManager : MonoBehaviour {
                 Tiles[x, y].transform.parent = transform;
             }
         }
+
+        //Give Tiles The Adjacent
+#pragma warning disable 0219
+        for (int y = (int)MapSize - 1; y >= 0; --y)
+        {
+            for (int x = 0; x < MapSize; ++x)
+            {
+                if (y < MapSize - 1) TileScripts[x, y].SetAdjacent(Direction.North, TileScripts[x, y + 1]);
+                else TileScripts[x, y].SetAdjacent(Direction.North, new TileRock());
+
+                if (y > 0) TileScripts[x, y].SetAdjacent(Direction.South, TileScripts[x, y - 1]);
+                else TileScripts[x, y].SetAdjacent(Direction.South, new TileRock());
+
+                if (x < MapSize - 1) TileScripts[x, y].SetAdjacent(Direction.East, TileScripts[x + 1, y]);
+                else TileScripts[x, y].SetAdjacent(Direction.East, new TileRock());
+
+                if (x > 0) TileScripts[x, y].SetAdjacent(Direction.West, TileScripts[x - 1, y]);
+                else TileScripts[x, y].SetAdjacent(Direction.West, new TileRock());
+            }
+        }
     }
+#pragma warning restore 0219
 
     // Update is called once per frame
     void Update ()
