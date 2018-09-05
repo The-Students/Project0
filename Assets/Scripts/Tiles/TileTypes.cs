@@ -14,19 +14,10 @@ public enum TileTypes
     Building = 6
 }
 
-public struct EmptySides
+public enum Direction
 {
-    public bool North;
-    public bool East;
-    public bool South;
-    public bool West;
-    public int GetAmount()
-    {
-        int temp = 0;
-        if (North) temp++;
-        if (East) temp++;
-        if (South) temp++;
-        if (West) temp++;
-        return temp;
-    }
+    North = 0,
+    East = 1,
+    South = 2,
+    West = 3
 }
