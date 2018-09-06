@@ -296,6 +296,7 @@ MonoBehaviour:
   _CameraSpeed: 1
   _MaxZoomHeight: 50
   _MinZoomHeight: 40
+  _TileManager: {fileID: 619961847}
 --- !u!1 &1586785073
 GameObject:
   m_ObjectHideFlags: 0

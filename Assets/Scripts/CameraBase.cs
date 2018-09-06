@@ -7,13 +7,24 @@ public class CameraBase : MonoBehaviour {
     public float _CameraSpeed;
     public float _MaxZoomHeight;
     public float _MinZoomHeight;
+    //public float _ClampOffset;
+    public GameObject _TileManager;
+
+    private float _minXClamp, _maxXClamp, _minZClamp, _maxZClamp;
+
+
 
     private Vector3 _globalCenter;
     private Vector2 _screenCenter;
     // Use this for initialization
     void Start ()
     {
+        var tileManager = _TileManager.GetComponent<TileManager>();
         _screenCenter.Set(Screen.width/2, Screen.height/2);
+        _minXClamp = -tileManager.GetMapSize() / 2;
+        _maxXClamp = tileManager.GetMapSize() / 2;
+        _minZClamp = -tileManager.GetMapSize() / 2;
+        _maxZClamp = tileManager.GetMapSize() / 2;
     }
 	
 	// Update is called once per frame
@@ -22,6 +33,13 @@ public class CameraBase : MonoBehaviour {
         CheckKey();
         CheckRotate();
         CheckMouse();
+
+
+        Vector3 pos = transform.position;
+        pos.z = Mathf.Clamp(pos.z, _minZClamp, _maxZClamp);
+        pos.x = Mathf.Clamp(pos.x, _minXClamp, _maxXClamp);
+        pos.y = Mathf.Clamp(pos.y, _MinZoomHeight, _MaxZoomHeight);
+        transform.position = pos;
     }
 
     public void SetCameraPosition(Vector3 pos)
