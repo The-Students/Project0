@@ -7,6 +7,7 @@ public class TileManager : MonoBehaviour {
     private GameObject[,] Tiles;
     private TileBase[,] TileScripts;
     private uint MapSize;
+    private float TileSize;
     private string MapText;
     public TextAsset MapFile;
     public GameObject PrefabDirt;
@@ -29,6 +30,7 @@ public class TileManager : MonoBehaviour {
         int index;
         MapSize = uint.Parse(MapText.Substring(0, index = MapText.IndexOf('.')));
         MapText = MapText.Substring(index + 1);
+        TileSize = tilesize;
 
         //MapSize = mapsize;
         Tiles = new GameObject[MapSize, MapSize];
@@ -109,5 +111,10 @@ public class TileManager : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
+    }
+
+    public float GetMapSize()
+    {
+        return MapSize * TileSize;
     }
 }
