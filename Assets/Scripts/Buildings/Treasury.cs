@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingEnum : MonoBehaviour {
+public class Treasury : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
