@@ -9,6 +9,7 @@ public class TileManager : MonoBehaviour {
     private uint MapSize;
     private float TileSize;
     private string MapText;
+
     public TextAsset MapFile;
     public GameObject PrefabDirt;
     public GameObject PrefabRock;
@@ -93,16 +94,16 @@ public class TileManager : MonoBehaviour {
             for (int x = 0; x < MapSize; ++x)
             {
                 if (y < MapSize - 1) TileScripts[x, y].SetAdjacent(Direction.North, TileScripts[x, y + 1]);
-                else TileScripts[x, y].SetAdjacent(Direction.North, new TileRock());
+                //else TileScripts[x, y].SetAdjacent(Direction.North, new TileRock());
 
                 if (y > 0) TileScripts[x, y].SetAdjacent(Direction.South, TileScripts[x, y - 1]);
-                else TileScripts[x, y].SetAdjacent(Direction.South, new TileRock());
+                //else TileScripts[x, y].SetAdjacent(Direction.South, new TileRock());
 
                 if (x < MapSize - 1) TileScripts[x, y].SetAdjacent(Direction.East, TileScripts[x + 1, y]);
-                else TileScripts[x, y].SetAdjacent(Direction.East, new TileRock());
+                //else TileScripts[x, y].SetAdjacent(Direction.East, new TileRock());
 
                 if (x > 0) TileScripts[x, y].SetAdjacent(Direction.West, TileScripts[x - 1, y]);
-                else TileScripts[x, y].SetAdjacent(Direction.West, new TileRock());
+                //else TileScripts[x, y].SetAdjacent(Direction.West, new TileRock());
             }
         }
     }
