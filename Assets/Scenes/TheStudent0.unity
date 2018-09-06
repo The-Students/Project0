@@ -162,7 +162,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 435865460}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1190c671e717a2e4c9b988d0143695c9, type: 3}
   m_Name: 
@@ -194,7 +194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61b4c7087478bed439bf3a126440799d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MapFile: {fileID: 4900000, guid: a669a00c74bc6dd49898b72823c0cf53, type: 3}
   PrefabDirt: {fileID: 1100424225270532, guid: 575102e37d49ce848a254111140fdb49, type: 2}
   PrefabRock: {fileID: 1405359973330952, guid: fc4285ef8e2c3da40a32af7bd52a23f3, type: 2}
   PrefabGem: {fileID: 1934580106688332, guid: 372626e8a0e71cf409d4f91daf49b645, type: 2}

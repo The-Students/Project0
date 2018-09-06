@@ -39,9 +39,9 @@ public class TileManager : MonoBehaviour {
         TileScripts = new TileBase[MapSize, MapSize];
 
         //CREATE TILES
-        for (int y = (int)MapSize - 1; y >= 0; --y)
+        for (int y = MapSize - 1; y >= 0; --y)
         {
-            for (int x = 0; x < MapSize; x++)
+            for (int x = 0; x < MapSize; ++x)
             {
                 TileTypes type = (TileTypes)FileReader.ReadInt16();
                 switch (type)
@@ -123,9 +123,9 @@ public class TileManager : MonoBehaviour {
                     TileBase[] Adjacent = TileScripts[x, y].GetAdjacent();
 
                     //TO-DO: MIGHT NOT WORK CHECK LATER
-                    var temp = Tiles[x, y];
-                    Tiles[x, y] = Instantiate(TileScripts[x, y].BreaksInto);
-                    Destroy(temp);
+                    //var temp = Tiles[x, y];
+                    //Tiles[x, y] = Instantiate(TileScripts[x, y].BreaksInto);
+                    //Destroy(temp);
                     ///////////////////////////////////
                     
                     switch (TileScripts[x, y].GetBreaksIntoTileType())
