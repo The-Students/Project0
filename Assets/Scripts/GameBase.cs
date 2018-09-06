@@ -8,7 +8,7 @@ public class GameBase : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        tileManager.Initialize(10);
+        tileManager.Initialize(10, "Assets/Maps/Map.bin");
 	}
 	
 	// Update is called once per frame

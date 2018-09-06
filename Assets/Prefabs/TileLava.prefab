@@ -108,3 +108,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb3f1ba8aee74994bbe9c692eb839397, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Mesh0Walls: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  Mesh1Wall: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  Mesh2WallsCorner: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  Mesh2WallsOpposing: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  Mesh3Walls: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  Mesh4Walls: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  BreaksInto: {fileID: 0}

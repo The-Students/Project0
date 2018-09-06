@@ -1,16 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class TileManager : MonoBehaviour {
 
     private GameObject[,] Tiles;
     private TileBase[,] TileScripts;
-    private uint MapSize;
+    private int MapSize;
     private float TileSize;
-    private string MapText;
-
-    public TextAsset MapFile;
+    private BinaryReader FileReader;
+    private FileStream File;
+    
     public GameObject PrefabDirt;
     public GameObject PrefabRock;
     public GameObject PrefabGem;
@@ -25,26 +26,24 @@ public class TileManager : MonoBehaviour {
 		
 	}
 
-    public void Initialize(uint tilesize)
+    public void Initialize(int tilesize, string path)
     {
-        MapText = MapFile.text;
-        int index;
-        MapSize = uint.Parse(MapText.Substring(0, index = MapText.IndexOf('.')));
-        MapText = MapText.Substring(index + 1);
+        byte[] bytes = new byte[sizeof(int)];
+        File = new FileStream(path, FileMode.Open);
+        FileReader = new BinaryReader(File);
+        
+        MapSize = FileReader.ReadInt16();
         TileSize = tilesize;
-
-        //MapSize = mapsize;
+        
         Tiles = new GameObject[MapSize, MapSize];
         TileScripts = new TileBase[MapSize, MapSize];
 
         //CREATE TILES
         for (int y = (int)MapSize - 1; y >= 0; --y)
         {
-            for (int x = 0; x < MapSize; ++x)
+            for (int x = 0; x < MapSize; x++)
             {
-                TileTypes type;
-                type = (TileTypes)int.Parse(MapText.Substring(0, index = MapText.IndexOf('.')));
-                MapText = MapText.Substring(index + 1);
+                TileTypes type = (TileTypes)FileReader.ReadInt16();
                 switch (type)
                 {
                     case TileTypes.Dirt:
@@ -88,22 +87,20 @@ public class TileManager : MonoBehaviour {
             }
         }
 
+        FileReader.Close();
+
         //Give Tiles The Adjacent
-        for (int y = (int)MapSize - 1; y >= 0; --y)
+        for (int y = MapSize - 1; y >= 0; --y)
         {
             for (int x = 0; x < MapSize; ++x)
             {
                 if (y < MapSize - 1) TileScripts[x, y].SetAdjacent(Direction.North, TileScripts[x, y + 1]);
-                //else TileScripts[x, y].SetAdjacent(Direction.North, new TileRock());
 
                 if (y > 0) TileScripts[x, y].SetAdjacent(Direction.South, TileScripts[x, y - 1]);
-                //else TileScripts[x, y].SetAdjacent(Direction.South, new TileRock());
 
                 if (x < MapSize - 1) TileScripts[x, y].SetAdjacent(Direction.East, TileScripts[x + 1, y]);
-                //else TileScripts[x, y].SetAdjacent(Direction.East, new TileRock());
 
                 if (x > 0) TileScripts[x, y].SetAdjacent(Direction.West, TileScripts[x - 1, y]);
-                //else TileScripts[x, y].SetAdjacent(Direction.West, new TileRock());
             }
         }
 
@@ -117,7 +114,7 @@ public class TileManager : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        for (int y = (int)MapSize - 1; y >= 0; --y)
+        for (int y = MapSize - 1; y >= 0; --y)
         {
             for (int x = 0; x < MapSize; ++x)
             {
