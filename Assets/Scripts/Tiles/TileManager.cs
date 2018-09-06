@@ -80,6 +80,7 @@ public class TileManager : MonoBehaviour {
                         TileScripts[x, y] = Tiles[x, y].GetComponent<TileDirt>();
                         break;
                 }
+                TileScripts[x, y].Initialize();
                 Tiles[x, y].name = "TileX" + x + "Y" + y;
                 Tiles[x, y].transform.Translate((x - (MapSize / 2.0f)) * tilesize, 0.0f, (y - (MapSize / 2.0f)) * tilesize);
                 Tiles[x, y].transform.localScale = new Vector3(tilesize, tilesize, tilesize);
@@ -88,7 +89,6 @@ public class TileManager : MonoBehaviour {
         }
 
         //Give Tiles The Adjacent
-#pragma warning disable 0219
         for (int y = (int)MapSize - 1; y >= 0; --y)
         {
             for (int x = 0; x < MapSize; ++x)
@@ -106,12 +106,68 @@ public class TileManager : MonoBehaviour {
                 //else TileScripts[x, y].SetAdjacent(Direction.West, new TileRock());
             }
         }
+
+        //Update Meshes
+        foreach (TileBase Tile in TileScripts)
+        {
+            Tile.UpdateMesh();
+        }
     }
-#pragma warning restore 0219
 
     // Update is called once per frame
     void Update ()
     {
+        for (int y = (int)MapSize - 1; y >= 0; --y)
+        {
+            for (int x = 0; x < MapSize; ++x)
+            {
+                if (TileScripts[x, y].GetIsDestroyed()) 
+                {
+                    TileBase[] Adjacent = TileScripts[x, y].GetAdjacent();
+
+                    //TO-DO: MIGHT NOT WORK CHECK LATER
+                    var temp = Tiles[x, y];
+                    Tiles[x, y] = Instantiate(TileScripts[x, y].BreaksInto);
+                    Destroy(temp);
+                    ///////////////////////////////////
+                    
+                    switch (TileScripts[x, y].GetBreaksIntoTileType())
+                    {
+                        case TileTypes.Empty:
+                            TileScripts[x, y] = Tiles[x, y].GetComponent<TileDirt>();
+                            break;
+                        case TileTypes.Dirt:
+                            TileScripts[x, y] = Tiles[x, y].GetComponent<TileDirt>();
+                            break;
+                        case TileTypes.Rock:
+                            TileScripts[x, y] = Tiles[x, y].GetComponent<TileRock>();
+                            break;
+                        case TileTypes.Gem:
+                            TileScripts[x, y] = Tiles[x, y].GetComponent<TileGem>();
+                            break;
+                        case TileTypes.Path:
+                            TileScripts[x, y] = Tiles[x, y].GetComponent<TileFloor>();
+                            break;
+                        case TileTypes.Lava:
+                            TileScripts[x, y] = Tiles[x, y].GetComponent<TileLava>();
+                            break;
+                        case TileTypes.Water:
+                            TileScripts[x, y] = Tiles[x, y].GetComponent<TileWater>();
+                            break;
+                        case TileTypes.Building:
+                            TileScripts[x, y] = Tiles[x, y].GetComponent<TileBuilding>();
+                            break;
+                    }
+
+                    TileScripts[x, y].Initialize();
+
+                    if (Adjacent[(int)Direction.North]) TileScripts[x, y].SetAdjacent(Direction.North, Adjacent[(int)Direction.North]);
+                    if (Adjacent[(int)Direction.East]) TileScripts[x, y].SetAdjacent(Direction.East, Adjacent[(int)Direction.East]);
+                    if (Adjacent[(int)Direction.South]) TileScripts[x, y].SetAdjacent(Direction.South, Adjacent[(int)Direction.South]);
+                    if (Adjacent[(int)Direction.West]) TileScripts[x, y].SetAdjacent(Direction.West, Adjacent[(int)Direction.West]);
+                }
+            }
+        }
     }
 
     public float GetMapSize()

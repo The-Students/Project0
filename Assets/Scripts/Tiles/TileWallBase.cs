@@ -5,9 +5,9 @@ using UnityEngine;
 public class TileWallBase : TileBase {
 
     // Use this for initialization
-    protected override void Start ()
+    public override void Initialize()
     {
-        base.Start();
+        base.Initialize();
         IsFlat = false;
 	}
 	

@@ -5,9 +5,9 @@ using UnityEngine;
 public class TileRock : TileWallBase {
 
     // Use this for initialization
-    protected override void Start ()
+    public override void Initialize()
     {
-        base.Start();
+        base.Initialize();
         TileType = TileTypes.Rock;
     }
 	

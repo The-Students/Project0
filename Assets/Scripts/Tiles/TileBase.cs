@@ -9,6 +9,7 @@ public class TileBase : MonoBehaviour {
     protected TileBase[] AdjacentTiles = new TileBase[4];
     protected bool IsFlat = false;
     protected Dictionary<Direction, bool> OpenSides = new Dictionary<Direction, bool>();
+    protected TileTypes BreaksIntoType = TileTypes.Empty;
 
     public Mesh Mesh0Walls;
     public Mesh Mesh1Wall;
@@ -16,10 +17,14 @@ public class TileBase : MonoBehaviour {
     public Mesh Mesh2WallsOpposing;
     public Mesh Mesh3Walls;
     public Mesh Mesh4Walls;
+    public GameObject BreaksInto;
 
 
     // Use this for initialization
-    protected virtual void Start ()
+    void Start ()
+    {
+    }
+    public virtual void Initialize()
     {
         TileType = TileTypes.Empty;
 	}
@@ -32,6 +37,7 @@ public class TileBase : MonoBehaviour {
 
     public void UpdateMesh()
     {
+        
         int NrOfOpenSides = 0;
         foreach (KeyValuePair<Direction, bool> Side in OpenSides)
         {
@@ -153,6 +159,19 @@ public class TileBase : MonoBehaviour {
 
     }
 
+    public void UpdateAdjacent()
+    {
+        foreach (TileBase Tile in AdjacentTiles)
+        {
+            Tile.UpdateMesh();
+        }
+    }
+
+    public TileBase[] GetAdjacent()
+    {
+        return AdjacentTiles;
+    }
+    
     public void TakeDamage(float damage)
     {
         HP -= damage;
@@ -179,6 +198,10 @@ public class TileBase : MonoBehaviour {
         return IsFlat;
     }
 
+    public TileTypes GetBreaksIntoTileType()
+    {
+        return BreaksIntoType;
+    }
 
     public void SetAdjacent(Direction dir, TileBase tile)
     {

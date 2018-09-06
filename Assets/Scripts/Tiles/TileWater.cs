@@ -5,9 +5,9 @@ using UnityEngine;
 public class TileWater : TileLiquidBase {
 
     // Use this for initialization
-    protected override void Start()
+    public override void Initialize()
     {
-        base.Start();
+        base.Initialize();
         TileType = TileTypes.Water;
     }
 

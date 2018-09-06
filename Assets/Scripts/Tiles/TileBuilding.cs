@@ -5,9 +5,9 @@ using UnityEngine;
 public class TileBuilding : TileBase {
 
     // Use this for initialization
-    protected override void Start()
+    public override void Initialize()
     {
-        base.Start();
+        base.Initialize();
         TileType = TileTypes.Building;
     }
 
