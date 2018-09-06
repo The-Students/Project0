@@ -95,12 +95,10 @@ public class CameraBase : MonoBehaviour {
         var midPoint = transform.position + (transform.forward * lenghtToGround);
         if (Input.GetKey(KeyCode.Q))
         {
-            Debug.Log(lenghtToGround);
             transform.RotateAround(midPoint, Vector3.up, _CameraSpeed);
         }
         if (Input.GetKey(KeyCode.E))
         {
-            Debug.Log(lenghtToGround);
             transform.RotateAround(midPoint, Vector3.up, -_CameraSpeed);
         }
     }
@@ -108,7 +106,6 @@ public class CameraBase : MonoBehaviour {
     private void CheckMouse()
     {
         Vector2 mouseVector = GetMouseVectorNormalized();
-        //Debug.Log(mouseVector + " BEFORE");
         mouseVector = RotateVector2(mouseVector, transform.eulerAngles.y);
         if (Input.mousePosition.y >= Screen.height || Input.mousePosition.x <= 0.0f
             || Input.mousePosition.y <= 0.0f || Input.mousePosition.x >= Screen.width)
