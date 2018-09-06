@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class TileFloor : TileFlatBase {
 
-	// Use this for initialization
-	protected override void Start ()
+    // Use this for initialization
+    public override void Initialize()
     {
-        base.Start();
+        base.Initialize();
         TileType = TileTypes.Path;
 	}
 	
