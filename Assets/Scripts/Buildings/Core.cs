@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameBase : MonoBehaviour {
-    public TileManager tileManager;
+public class Core : TileBuilding
+{
 
 	// Use this for initialization
-	void Start ()
+	protected override void Start ()
     {
-        tileManager.Initialize(10, "Assets/Maps/Map.bin");
+        base.Start();
+        _buildingType = BuildingType.CORE;
 	}
 	
 	// Update is called once per frame
