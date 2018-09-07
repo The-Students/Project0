@@ -84,7 +84,7 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1100424225270532}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 74884cdd7a5c1a040a2baa5abda342ef, type: 3}
 --- !u!65 &65838488979862708
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -95,8 +95,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.5, y: 0.75, z: 0.5}
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!114 &114742136063613120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -108,10 +108,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c3794fe2163b05498c9d6f50bbf28cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mesh0Walls: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  Mesh1Wall: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
-  Mesh2WallsCorner: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  Mesh2WallsOpposing: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  Mesh3Walls: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  Mesh4Walls: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  Mesh0Walls: {fileID: 4300000, guid: 74884cdd7a5c1a040a2baa5abda342ef, type: 3}
+  Mesh1Wall: {fileID: 4300000, guid: 74884cdd7a5c1a040a2baa5abda342ef, type: 3}
+  Mesh2WallsCorner: {fileID: 4300000, guid: 74884cdd7a5c1a040a2baa5abda342ef, type: 3}
+  Mesh2WallsOpposing: {fileID: 4300000, guid: 74884cdd7a5c1a040a2baa5abda342ef, type: 3}
+  Mesh3Walls: {fileID: 4300000, guid: 74884cdd7a5c1a040a2baa5abda342ef, type: 3}
+  Mesh4Walls: {fileID: 4300000, guid: 74884cdd7a5c1a040a2baa5abda342ef, type: 3}
   BreaksInto: {fileID: 0}

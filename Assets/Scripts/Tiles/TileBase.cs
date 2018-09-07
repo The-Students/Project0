@@ -6,7 +6,7 @@ public class TileBase : MonoBehaviour {
     protected float HP = 1.0f;
     protected TileTypes TileType = TileTypes.Empty;
     protected bool IsDestroyed = false;
-    protected TileBase[] AdjacentTiles = new TileBase[4];
+    protected TileBase[] AdjacentTiles = new TileBase[8];
     protected bool IsFlat = false;
     protected Dictionary<Direction, bool> OpenSides = new Dictionary<Direction, bool>();
     protected TileTypes BreaksIntoType = TileTypes.Empty;
@@ -38,123 +38,93 @@ public class TileBase : MonoBehaviour {
     public void UpdateMesh()
     {
         
+        bool n, e, s, w;
         int NrOfOpenSides = 0;
+        int NrOfDirectlyOpenSides = 0;
+
+        OpenSides.TryGetValue(Direction.North, out n);
+        OpenSides.TryGetValue(Direction.East, out e);
+        OpenSides.TryGetValue(Direction.South, out s);
+        OpenSides.TryGetValue(Direction.West, out w);
+
+        if (n) NrOfDirectlyOpenSides++;
+        if (e) NrOfDirectlyOpenSides++;
+        if (s) NrOfDirectlyOpenSides++;
+        if (w) NrOfDirectlyOpenSides++;
+
         foreach (KeyValuePair<Direction, bool> Side in OpenSides)
         {
             if (Side.Value) NrOfOpenSides++;
         }
-        switch (NrOfOpenSides)
+
+        if (NrOfOpenSides == 0) //NOTHING
         {
-            case 0:
-                gameObject.GetComponent<MeshFilter>().mesh = Mesh4Walls;
-                gameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0, 4) * 90, 0);
-                break;
-            case 1:
-                gameObject.GetComponent<MeshFilter>().mesh = Mesh3Walls;
-                foreach (KeyValuePair<Direction, bool> Side in OpenSides)
-                {
-                    if (Side.Value) //Find empty side
-                    {
-                        switch (Side.Key)
-                        {
-                            case Direction.North:
-                                gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
-                                break;
-                            case Direction.East:
-                                gameObject.transform.rotation = Quaternion.Euler(0, 270, 0);
-                                break;
-                            case Direction.South:
-                                gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
-                                break;
-                            case Direction.West:
-                                gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
-                                break;
-                        }
-                        break;
-                    }
-                }
-                break;
-            case 2:
-                bool n = false, s = false;
-                OpenSides.TryGetValue(Direction.North, out n);
-                OpenSides.TryGetValue(Direction.South, out s);
-                if (n == s)
-                {
-                    gameObject.GetComponent<MeshFilter>().mesh = Mesh2WallsOpposing;
-                    foreach (KeyValuePair<Direction, bool> Side in OpenSides)
-                    {
-                        if (!Side.Value) //Find side with wall
-                        {
-                            switch (Side.Key)
-                            {
-                                case Direction.North:
-                                case Direction.South:
-                                    gameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0,2) * 180, 0);
-                                    break;
-                                case Direction.East:
-                                case Direction.West:
-                                    gameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0, 2) * 180 + 90, 0);
-                                    break;
-                            }
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    gameObject.GetComponent<MeshFilter>().mesh = Mesh2WallsCorner;
-                    foreach (KeyValuePair<Direction, bool> Side in OpenSides)
-                    {
-                        if (!Side.Value) //Find side with wall
-                        {
-                            switch (Side.Key)
-                            {
-                                case Direction.East:
-                                    if (n) gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
-                                    else gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
-                                    break;
-                                case Direction.West:
-                                    if (n) gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
-                                    else gameObject.transform.rotation = Quaternion.Euler(0, 270, 0);
-                                    break;
-                            }
-                            break;
-                        }
-                    }
-                }
-                break;
-            case 3:
+            gameObject.GetComponent<MeshFilter>().mesh = Mesh0Walls;
+            gameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0, 4) * 90, 0);
+        }
+        else if (NrOfDirectlyOpenSides == 1) //WALL
+        {
+            if (NrOfDirectlyOpenSides == 1 && NrOfOpenSides - NrOfDirectlyOpenSides < 3)
+            {
                 gameObject.GetComponent<MeshFilter>().mesh = Mesh1Wall;
-                foreach (KeyValuePair<Direction, bool> Side in OpenSides)
+                if (n) gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
+                else if (e) gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
+                else if (s) gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+                else if (w) gameObject.transform.rotation = Quaternion.Euler(0, 270, 0);
+            }
+            else
+            {
+                bool ne, se, sw, nw;
+
+                OpenSides.TryGetValue(Direction.NorthEast, out ne);
+                OpenSides.TryGetValue(Direction.SouthEast, out se);
+                OpenSides.TryGetValue(Direction.SouthWest, out sw);
+                OpenSides.TryGetValue(Direction.NorthWest, out nw);
+
+                if (n && !se && !sw)
                 {
-                    if (!Side.Value) //Find side with wall
-                    {
-                        switch (Side.Key)
-                        {
-                            case Direction.North:
-                                gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
-                                break;
-                            case Direction.East:
-                                gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
-                                break;
-                            case Direction.South:
-                                gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
-                                break;
-                            case Direction.West:
-                                gameObject.transform.rotation = Quaternion.Euler(0, 270, 0);
-                                break;
-                        }
-                        break;
-                    }
+                    gameObject.GetComponent<MeshFilter>().mesh = Mesh1Wall;
+                    gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
                 }
-                break;
-            case 4:
-                gameObject.GetComponent<MeshFilter>().mesh = Mesh0Walls;
-                gameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0, 4) * 90, 0);
-                break;
-            default:
-                //EXPLOSION *SHRRRRRIIIIIIIIIIIIII BOOOOOOOOM*
-                break;
+                else if (e && !sw && !nw)
+                {
+                    gameObject.GetComponent<MeshFilter>().mesh = Mesh1Wall;
+                    gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
+                }
+                else if (s && !ne && !nw)
+                {
+                    gameObject.GetComponent<MeshFilter>().mesh = Mesh1Wall;
+                    gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+                }
+                else if (w && !se && !ne)
+                {
+                    gameObject.GetComponent<MeshFilter>().mesh = Mesh1Wall;
+                    gameObject.transform.rotation = Quaternion.Euler(0, 270, 0);
+                }
+                else //OTHER STUFF (With one open side)
+                {
+                    gameObject.GetComponent<MeshFilter>().mesh = Mesh4Walls;
+                    gameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0, 4) * 90, 0);
+                }
+            }
+        }
+        else if (n == s && e == w && n != e)  //DOUBLE WALL
+        {
+            if (n == true)
+            {
+                gameObject.GetComponent<MeshFilter>().mesh = Mesh2WallsOpposing;
+                gameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0, 2) * 180, 0);
+            }
+            else
+            {
+                gameObject.GetComponent<MeshFilter>().mesh = Mesh2WallsOpposing;
+                gameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0, 2) * 180 + 90, 0);
+            }
+        }
+        else //OTHER STUFF
+        {
+            gameObject.GetComponent<MeshFilter>().mesh = Mesh4Walls;
+            gameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0, 4) * 90, 0);
         }
 
     }
