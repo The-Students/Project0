@@ -6,9 +6,9 @@ public class Core : TileBuilding
 {
 
 	// Use this for initialization
-	protected override void Start ()
+	public override void Initialize()
     {
-        base.Start();
+        base.Initialize();
         _buildingType = BuildingType.CORE;
 	}
 	
