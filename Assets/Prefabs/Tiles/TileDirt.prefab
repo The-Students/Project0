@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4726082956617590}
   - component: {fileID: 65838488979862708}
   - component: {fileID: 114742136063613120}
+  - component: {fileID: 208175010163405576}
   m_Layer: 0
   m_Name: TileDirt
   m_TagString: Tile
@@ -71,3 +72,18 @@ MonoBehaviour:
     type: 2}
   PrefabTop: {fileID: 1437989202515762, guid: 75ddc3057831f8d47923158d71f90f5f, type: 2}
   BreaksInto: {fileID: 1826708721588372, guid: 40da8001aa3a7fe4987d7810700853e4, type: 2}
+--- !u!208 &208175010163405576
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1100424225270532}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.625, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.625, z: 0}
+  m_TimeToStationary: 0.2
