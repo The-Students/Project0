@@ -159,11 +159,15 @@ public class TileManager : MonoBehaviour {
                     }
 
                     TileScripts[x, y].Initialize();
-
+                    
                     if (Adjacent[(int)Direction.North]) TileScripts[x, y].SetAdjacent(Direction.North, Adjacent[(int)Direction.North]);
                     if (Adjacent[(int)Direction.East]) TileScripts[x, y].SetAdjacent(Direction.East, Adjacent[(int)Direction.East]);
                     if (Adjacent[(int)Direction.South]) TileScripts[x, y].SetAdjacent(Direction.South, Adjacent[(int)Direction.South]);
                     if (Adjacent[(int)Direction.West]) TileScripts[x, y].SetAdjacent(Direction.West, Adjacent[(int)Direction.West]);
+                    if (Adjacent[(int)Direction.NorthWest]) TileScripts[x, y].SetAdjacent(Direction.NorthWest, Adjacent[(int)Direction.NorthWest]);
+                    if (Adjacent[(int)Direction.NorthEast]) TileScripts[x, y].SetAdjacent(Direction.NorthEast, Adjacent[(int)Direction.NorthEast]);
+                    if (Adjacent[(int)Direction.SouthEast]) TileScripts[x, y].SetAdjacent(Direction.SouthEast, Adjacent[(int)Direction.SouthEast]);
+                    if (Adjacent[(int)Direction.SouthWest]) TileScripts[x, y].SetAdjacent(Direction.SouthWest, Adjacent[(int)Direction.SouthWest]);
                 }
             }
         }
