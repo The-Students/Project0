@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 using UnityEngine;
 
-public class GameBase : MonoBehaviour {
+public class GameBase : NetworkBehaviour {
     public TileManager tileManager;
 
 	// Use this for initialization

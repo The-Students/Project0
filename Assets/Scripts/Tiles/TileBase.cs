@@ -1,15 +1,15 @@
 ﻿using System.Collections;
+using UnityEngine.Networking;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileBase : MonoBehaviour {
+public class TileBase : NetworkBehaviour {
     protected float HP = 1.0f;
     protected TileTypes TileType = TileTypes.Empty;
     protected bool IsDestroyed = false;
     protected TileBase[] AdjacentTiles = new TileBase[8];
     protected bool IsFlat = false;
     protected Dictionary<Direction, bool> OpenSides = new Dictionary<Direction, bool>();
-    protected TileTypes BreaksIntoType = TileTypes.Empty;
 
 
     public GameObject PrefabWall;
@@ -40,104 +40,129 @@ public class TileBase : MonoBehaviour {
         //DELETE OLD MESH
         foreach (Transform ChildTransform in GetComponentsInChildren<Transform>())
         {
-            Destroy(ChildTransform.gameObject);
+            if (transform != ChildTransform) Destroy(ChildTransform.gameObject);
         }
-        
+
         //ADD TOP
-        Instantiate(PrefabTop).transform.parent = transform;
-        
+        GameObject top = Instantiate(PrefabTop);
+        SetPart(ref top);
+
         foreach (KeyValuePair<Direction, bool> Side in OpenSides)
         {
             switch (Side.Key)
             {
                 //ADD WALLS
                 case Direction.North:
-                    GameObject wallN = Instantiate(PrefabWall);
-                    wallN.transform.parent = transform;
-                    wallN.transform.Rotate(0, 180, 0);
+                    if (Side.Value)
+                    {
+                        GameObject wallN = Instantiate(PrefabWall);
+                        SetPart(ref wallN);
+                        wallN.transform.RotateAround(transform.position, Vector3.up, 180);
+                    }
                     break;
                 case Direction.East:
-                    GameObject wallE = Instantiate(PrefabWall);
-                    wallE.transform.parent = transform;
-                    wallE.transform.Rotate(0, 90, 0);
+                    if (Side.Value)
+                    {
+                        GameObject wallE = Instantiate(PrefabWall);
+                        SetPart(ref wallE);
+                        wallE.transform.RotateAround(transform.position, Vector3.up, 90);
+                    }
                     break;
                 case Direction.South:
-                    GameObject wallS = Instantiate(PrefabWall);
-                    wallS.transform.parent = transform;
-                    wallS.transform.Rotate(0, 0, 0);
+                    if (Side.Value)
+                    {
+                        GameObject wallS = Instantiate(PrefabWall);
+                        SetPart(ref wallS);
+                        wallS.transform.RotateAround(transform.position, Vector3.up, 0);
+                    }
                     break;
                 case Direction.West:
-                    GameObject wallW = Instantiate(PrefabWall);
-                    wallW.transform.parent = transform;
-                    wallW.transform.Rotate(0, 270, 0);
+                    if (Side.Value)
+                    {
+                        GameObject wallW = Instantiate(PrefabWall);
+                        SetPart(ref wallW);
+                        wallW.transform.RotateAround(transform.position, Vector3.up, 270);
+                    }
                     break;
                 //ADD CORNERS
                 case Direction.NorthWest:
-                    //Normal
-                    if (OpenSides[Direction.North] && OpenSides[Direction.West])
+                    if (Side.Value)
                     {
-                        GameObject cornNW = Instantiate(PrefabCorner);
-                        cornNW.transform.parent = transform;
-                        cornNW.transform.Rotate(0, 180, 0);
-                    }
-                    else 
-                    //Inner
-                    if (!OpenSides[Direction.North] && !OpenSides[Direction.West])
-                    {
-                        GameObject incorNW = Instantiate(PrefabInnerCorner);
-                        incorNW.transform.parent = transform;
-                        incorNW.transform.Rotate(0, 180, 0);
+                        //Normal
+                        if (OpenSides[Direction.North] && OpenSides[Direction.West])
+                        {
+                            GameObject cornNW = Instantiate(PrefabCorner);
+                            SetPart(ref cornNW);
+                            cornNW.transform.RotateAround(transform.position, Vector3.up, 180);
+                        }
+                        else
+                        //Inner
+                        if (!OpenSides[Direction.North] && !OpenSides[Direction.West])
+                        {
+                            GameObject incorNW = Instantiate(PrefabInnerCorner);
+                            SetPart(ref incorNW);
+                            incorNW.transform.RotateAround(transform.position, Vector3.up, 180);
+                        }
                     }
                     break;
                 case Direction.NorthEast:
-                    //Normal
-                    if (OpenSides[Direction.North] && OpenSides[Direction.East])
+                    if (Side.Value)
                     {
-                        GameObject cornNE = Instantiate(PrefabCorner);
-                        cornNE.transform.parent = transform;
-                        cornNE.transform.Rotate(0, 90, 0);
-                    }
-                    else
-                    //Inner
-                    if (!OpenSides[Direction.North] && !OpenSides[Direction.East])
-                    {
-                        GameObject incorNE = Instantiate(PrefabInnerCorner);
-                        incorNE.transform.parent = transform;
-                        incorNE.transform.Rotate(0, 90, 0);
+                        //Normal
+                        if (OpenSides[Direction.North] && OpenSides[Direction.East])
+                        {
+                            GameObject cornNE = Instantiate(PrefabCorner);
+                            SetPart(ref cornNE);
+                            cornNE.transform.RotateAround(transform.position, Vector3.up, 90);
+                        }
+                        else
+                        //Inner
+                        if (!OpenSides[Direction.North] && !OpenSides[Direction.East])
+                        {
+                            GameObject incorNE = Instantiate(PrefabInnerCorner);
+                            SetPart(ref incorNE);
+                            incorNE.transform.RotateAround(transform.position, Vector3.up, 90);
+                        }
                     }
                     break;
                 case Direction.SouthWest:
-                    //Normal
-                    if (OpenSides[Direction.South] && OpenSides[Direction.West])
+                    if (Side.Value)
                     {
-                        GameObject cornSW = Instantiate(PrefabCorner);
-                        cornSW.transform.parent = transform;
-                        cornSW.transform.Rotate(0, 270, 0);
-                    }
-                    else
-                    //Inner
-                    if (!OpenSides[Direction.South] && !OpenSides[Direction.West])
-                    {
-                        GameObject incorSW = Instantiate(PrefabInnerCorner);
-                        incorSW.transform.parent = transform;
-                        incorSW.transform.Rotate(0, 270, 0);
+                        //Normal
+                        if (OpenSides[Direction.South] && OpenSides[Direction.West])
+                        {
+                            GameObject cornSW = Instantiate(PrefabCorner);
+                            SetPart(ref cornSW);
+                            cornSW.transform.RotateAround(transform.position, Vector3.up, 270);
+                        }
+                        else
+                        //Inner
+                        if (!OpenSides[Direction.South] && !OpenSides[Direction.West])
+                        {
+                            GameObject incorSW = Instantiate(PrefabInnerCorner);
+                            SetPart(ref incorSW);
+                            incorSW.transform.RotateAround(transform.position, Vector3.up, 270);
+                        }
                     }
                     break;
                 case Direction.SouthEast:
-                    //Normal
-                    if (OpenSides[Direction.South] && OpenSides[Direction.East])
+                    if (Side.Value)
                     {
-                        GameObject cornSE = Instantiate(PrefabCorner);
-                        cornSE.transform.parent = transform;
-                        cornSE.transform.Rotate(0, 0, 0);
-                    }
-                    else
-                    //Inner
-                    if (!OpenSides[Direction.South] && !OpenSides[Direction.East])
-                    {
-                        GameObject incorSE = Instantiate(PrefabInnerCorner);
-                        incorSE.transform.parent = transform;
-                        incorSE.transform.Rotate(0, 0, 0);
+                        //Normal
+                        if (OpenSides[Direction.South] && OpenSides[Direction.East])
+                        {
+                            GameObject cornSE = Instantiate(PrefabCorner);
+                            SetPart(ref cornSE);
+                            cornSE.transform.RotateAround(transform.position, Vector3.up, 0);
+                        }
+                        else
+                        //Inner
+                        if (!OpenSides[Direction.South] && !OpenSides[Direction.East])
+                        {
+                            GameObject incorSE = Instantiate(PrefabInnerCorner);
+                            SetPart(ref incorSE);
+                            incorSE.transform.RotateAround(transform.position, Vector3.up, 0);
+                        }
                     }
                     break;
             }
@@ -185,7 +210,7 @@ public class TileBase : MonoBehaviour {
 
     public TileTypes GetBreaksIntoTileType()
     {
-        return BreaksIntoType;
+        return BreaksInto.GetComponent<TileBase>().TileType;
     }
 
     public void SetAdjacent(Direction dir, TileBase tile)
@@ -195,5 +220,20 @@ public class TileBase : MonoBehaviour {
         bool val;
         if (OpenSides.TryGetValue(dir, out val)) OpenSides[dir] = AdjacentTiles[(int)dir].IsFlat;
         else OpenSides.Add(dir, AdjacentTiles[(int)dir].IsFlat);
+    }
+
+    private void SetPart(ref GameObject obj)
+    {
+        Vector3 temp = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        temp.Scale(obj.transform.position);
+        obj.transform.position = temp;
+
+        obj.transform.parent = transform;
+
+        temp = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        temp.Scale(obj.transform.localScale);
+        obj.transform.localScale = temp;
+
+        obj.transform.position += transform.position;
     }
 }
