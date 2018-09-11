@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Treasury : MonoBehaviour {
+public class Treasury : TileBuilding
+{
+    public int Capacity;
 
 	// Use this for initialization
-	void Start () {
-		
+	public override void Initialize()
+    {
+        base.Initialize();
+        _buildingType = BuildingType.TREASURY;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		
 	}
 }
