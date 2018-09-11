@@ -29,8 +29,13 @@ public class TileBase : NetworkBehaviour {
         TileType = TileTypes.Empty;
 	}
 
-	// Update is called once per frame
-	void Update ()
+    void OnMouseDown()
+    {
+        TakeDamage(999.0f);
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
 		
 	}
