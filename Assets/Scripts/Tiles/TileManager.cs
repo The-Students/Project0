@@ -120,7 +120,6 @@ public class TileManager : NetworkBehaviour
     }
 
     // Update is called once per frame
-<<<<<<< HEAD
     //void Update ()
     //{
     //    for (int y = MapSize - 1; y >= 0; --y)
@@ -183,7 +182,6 @@ public class TileManager : NetworkBehaviour
     //        }
     //    }
     //}
-=======
     void Update ()
     {
         for (int y = MapSize - 1; y >= 0; --y)
@@ -252,8 +250,6 @@ public class TileManager : NetworkBehaviour
             }
         }
     }
->>>>>>> f9696fd4e4686443841965ae1504b91abfff2a97
-
     public float GetMapSize()
     {
         return MapSize * TileSize;
