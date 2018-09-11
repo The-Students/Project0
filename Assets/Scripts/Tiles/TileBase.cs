@@ -224,8 +224,16 @@ public class TileBase : NetworkBehaviour {
 
     private void SetPart(ref GameObject obj)
     {
-        obj.transform.position.Scale(transform.localScale);
-        obj.transform.localScale.Scale(transform.localScale);
+        //Temp can be deleted later
+        Vector3 temp = obj.transform.position;
+        temp.Scale(transform.localScale);
+        obj.transform.position = temp;
+        ///////////////////////////
+
+        temp = obj.transform.localScale;
+        temp.Scale(transform.localScale);
+        obj.transform.localScale = temp;
+
         obj.transform.position += transform.position;
         obj.transform.parent = transform;
     }
