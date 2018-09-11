@@ -110,7 +110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Mesh0Walls: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   Mesh1Wall: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  Mesh2WallsCorner: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  Mesh2WallsCorner: {fileID: 4300000, guid: 74884cdd7a5c1a040a2baa5abda342ef, type: 3}
   Mesh2WallsOpposing: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   Mesh3Walls: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   Mesh4Walls: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}

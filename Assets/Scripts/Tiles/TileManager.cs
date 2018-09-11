@@ -82,7 +82,7 @@ public class TileManager : MonoBehaviour {
                 TileScripts[x, y].Initialize();
                 Tiles[x, y].name = "TileX" + x + "Y" + y;
                 Tiles[x, y].transform.Translate((x - (MapSize / 2.0f)) * tilesize, 0.0f, (y - (MapSize / 2.0f)) * tilesize);
-                Tiles[x, y].transform.localScale = new Vector3(tilesize, tilesize, tilesize);
+                Tiles[x, y].transform.localScale = new Vector3(tilesize * 2.5f, tilesize * 2.5f, tilesize * 2.5f);
                 Tiles[x, y].transform.parent = transform;
             }
         }
@@ -95,12 +95,14 @@ public class TileManager : MonoBehaviour {
             for (int x = 0; x < MapSize; ++x)
             {
                 if (y < MapSize - 1) TileScripts[x, y].SetAdjacent(Direction.North, TileScripts[x, y + 1]);
-
                 if (y > 0) TileScripts[x, y].SetAdjacent(Direction.South, TileScripts[x, y - 1]);
-
                 if (x < MapSize - 1) TileScripts[x, y].SetAdjacent(Direction.East, TileScripts[x + 1, y]);
-
                 if (x > 0) TileScripts[x, y].SetAdjacent(Direction.West, TileScripts[x - 1, y]);
+
+                if (x > 0 && y < MapSize - 1) TileScripts[x, y].SetAdjacent(Direction.NorthWest, TileScripts[x - 1, y + 1]);
+                if (x > 0 && y > 0) TileScripts[x, y].SetAdjacent(Direction.SouthWest, TileScripts[x - 1, y - 1]);
+                if (x < MapSize - 1 && y < MapSize - 1) TileScripts[x, y].SetAdjacent(Direction.NorthEast, TileScripts[x + 1, y + 1]);
+                if (x < MapSize - 1 && y > 0) TileScripts[x, y].SetAdjacent(Direction.SouthEast, TileScripts[x + 1, y - 1]);
             }
         }
 

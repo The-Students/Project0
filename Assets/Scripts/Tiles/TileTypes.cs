@@ -19,5 +19,9 @@ public enum Direction
     North = 0,
     East = 1,
     South = 2,
-    West = 3
+    West = 3,
+    NorthWest = 4,
+    NorthEast = 5,
+    SouthWest = 6,
+    SouthEast = 7
 }
