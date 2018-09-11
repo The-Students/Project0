@@ -126,12 +126,21 @@ public class TileManager : NetworkBehaviour
                     if (TileScripts[x, y].GetIsDestroyed())
                     {
                         TileBase[] Adjacent = TileScripts[x, y].GetAdjacent();
-
+                        
                         //TO-DO: MIGHT NOT WORK CHECK LATER
-                        var temp = Tiles[x, y];
+                        var type = TileScripts[x, y].GetBreaksIntoTileType();
+                        string name = Tiles[x, y].name;
+                        Transform trans = Tiles[x, y].transform;
+
+                        Destroy(Tiles[x, y]);
                         Tiles[x, y] = Instantiate(TileScripts[x, y].BreaksInto);
 
-                        switch (TileScripts[x, y].GetBreaksIntoTileType())
+                        Tiles[x, y].name = name;
+                        Tiles[x, y].transform.position = trans.position;
+                        Tiles[x, y].transform.localScale = trans.localScale;
+                        Tiles[x, y].transform.parent = transform;
+
+                        switch (type)
                         {
                             case TileTypes.Empty:
                                 TileScripts[x, y] = Tiles[x, y].GetComponent<TileDirt>();
@@ -158,9 +167,6 @@ public class TileManager : NetworkBehaviour
                                 TileScripts[x, y] = Tiles[x, y].GetComponent<TileBuilding>();
                                 break;
                         }
-
-                        //Check later
-                        Destroy(temp);
 
                         TileScripts[x, y].Initialize();
 
