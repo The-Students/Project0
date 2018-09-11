@@ -29,8 +29,13 @@ public class TileBase : NetworkBehaviour {
         TileType = TileTypes.Empty;
 	}
 
-	// Update is called once per frame
-	void Update ()
+    void OnMouseDown()
+    {
+        TakeDamage(999.0f);
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
 		
 	}
@@ -224,16 +229,17 @@ public class TileBase : NetworkBehaviour {
 
     private void SetPart(ref GameObject obj)
     {
-        Vector3 temp = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        temp.Scale(obj.transform.position);
+        //Temp can be deleted later
+        Vector3 temp = obj.transform.position;
+        temp.Scale(transform.localScale);
         obj.transform.position = temp;
+        ///////////////////////////
 
-        obj.transform.parent = transform;
-
-        temp = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        temp.Scale(obj.transform.localScale);
+        temp = obj.transform.localScale;
+        temp.Scale(transform.localScale);
         obj.transform.localScale = temp;
 
         obj.transform.position += transform.position;
+        obj.transform.parent = transform;
     }
 }
