@@ -11,12 +11,12 @@ public class TileBase : MonoBehaviour {
     protected Dictionary<Direction, bool> OpenSides = new Dictionary<Direction, bool>();
     protected TileTypes BreaksIntoType = TileTypes.Empty;
 
-    public Mesh Mesh0Walls;
-    public Mesh Mesh1Wall;
-    public Mesh Mesh2WallsCorner;
-    public Mesh Mesh2WallsOpposing;
-    public Mesh Mesh3Walls;
-    public Mesh Mesh4Walls;
+
+    public GameObject PrefabWall;
+    public GameObject PrefabCorner;
+    public GameObject PrefabInnerCorner;
+    public GameObject PrefabTop;
+    
     public GameObject BreaksInto;
 
 
@@ -35,101 +35,116 @@ public class TileBase : MonoBehaviour {
 		
 	}
 
-    public void UpdateMesh()
+    public virtual void UpdateMesh()
     {
+        //DELETE OLD MESH
+        foreach (Transform ChildTransform in GetComponentsInChildren<Transform>())
+        {
+            Destroy(ChildTransform.gameObject);
+        }
         
-        bool n, e, s, w;
-        int NrOfOpenSides = 0;
-        int NrOfDirectlyOpenSides = 0;
-
-        OpenSides.TryGetValue(Direction.North, out n);
-        OpenSides.TryGetValue(Direction.East, out e);
-        OpenSides.TryGetValue(Direction.South, out s);
-        OpenSides.TryGetValue(Direction.West, out w);
-
-        if (n) NrOfDirectlyOpenSides++;
-        if (e) NrOfDirectlyOpenSides++;
-        if (s) NrOfDirectlyOpenSides++;
-        if (w) NrOfDirectlyOpenSides++;
-
+        //ADD TOP
+        Instantiate(PrefabTop).transform.parent = transform;
+        
         foreach (KeyValuePair<Direction, bool> Side in OpenSides)
         {
-            if (Side.Value) NrOfOpenSides++;
-        }
-
-        if (NrOfOpenSides == 0) //NOTHING
-        {
-            gameObject.GetComponent<MeshFilter>().mesh = Mesh0Walls;
-            gameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0, 4) * 90, 0);
-        }
-        else if (NrOfDirectlyOpenSides == 1) //WALL
-        {
-            if (NrOfDirectlyOpenSides == 1 && NrOfOpenSides - NrOfDirectlyOpenSides < 3)
+            switch (Side.Key)
             {
-                gameObject.GetComponent<MeshFilter>().mesh = Mesh1Wall;
-                if (n) gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
-                else if (e) gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
-                else if (s) gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
-                else if (w) gameObject.transform.rotation = Quaternion.Euler(0, 270, 0);
-            }
-            else
-            {
-                bool ne, se, sw, nw;
-
-                OpenSides.TryGetValue(Direction.NorthEast, out ne);
-                OpenSides.TryGetValue(Direction.SouthEast, out se);
-                OpenSides.TryGetValue(Direction.SouthWest, out sw);
-                OpenSides.TryGetValue(Direction.NorthWest, out nw);
-
-                if (n && !se && !sw)
-                {
-                    gameObject.GetComponent<MeshFilter>().mesh = Mesh1Wall;
-                    gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
-                }
-                else if (e && !sw && !nw)
-                {
-                    gameObject.GetComponent<MeshFilter>().mesh = Mesh1Wall;
-                    gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
-                }
-                else if (s && !ne && !nw)
-                {
-                    gameObject.GetComponent<MeshFilter>().mesh = Mesh1Wall;
-                    gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
-                }
-                else if (w && !se && !ne)
-                {
-                    gameObject.GetComponent<MeshFilter>().mesh = Mesh1Wall;
-                    gameObject.transform.rotation = Quaternion.Euler(0, 270, 0);
-                }
-                else //OTHER STUFF (With one open side)
-                {
-                    gameObject.GetComponent<MeshFilter>().mesh = Mesh4Walls;
-                    gameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0, 4) * 90, 0);
-                }
+                //ADD WALLS
+                case Direction.North:
+                    GameObject wallN = Instantiate(PrefabWall);
+                    wallN.transform.parent = transform;
+                    wallN.transform.Rotate(0, 180, 0);
+                    break;
+                case Direction.East:
+                    GameObject wallE = Instantiate(PrefabWall);
+                    wallE.transform.parent = transform;
+                    wallE.transform.Rotate(0, 90, 0);
+                    break;
+                case Direction.South:
+                    GameObject wallS = Instantiate(PrefabWall);
+                    wallS.transform.parent = transform;
+                    wallS.transform.Rotate(0, 0, 0);
+                    break;
+                case Direction.West:
+                    GameObject wallW = Instantiate(PrefabWall);
+                    wallW.transform.parent = transform;
+                    wallW.transform.Rotate(0, 270, 0);
+                    break;
+                //ADD CORNERS
+                case Direction.NorthWest:
+                    //Normal
+                    if (OpenSides[Direction.North] && OpenSides[Direction.West])
+                    {
+                        GameObject cornNW = Instantiate(PrefabCorner);
+                        cornNW.transform.parent = transform;
+                        cornNW.transform.Rotate(0, 180, 0);
+                    }
+                    else 
+                    //Inner
+                    if (!OpenSides[Direction.North] && !OpenSides[Direction.West])
+                    {
+                        GameObject incorNW = Instantiate(PrefabInnerCorner);
+                        incorNW.transform.parent = transform;
+                        incorNW.transform.Rotate(0, 180, 0);
+                    }
+                    break;
+                case Direction.NorthEast:
+                    //Normal
+                    if (OpenSides[Direction.North] && OpenSides[Direction.East])
+                    {
+                        GameObject cornNE = Instantiate(PrefabCorner);
+                        cornNE.transform.parent = transform;
+                        cornNE.transform.Rotate(0, 90, 0);
+                    }
+                    else
+                    //Inner
+                    if (!OpenSides[Direction.North] && !OpenSides[Direction.East])
+                    {
+                        GameObject incorNE = Instantiate(PrefabInnerCorner);
+                        incorNE.transform.parent = transform;
+                        incorNE.transform.Rotate(0, 90, 0);
+                    }
+                    break;
+                case Direction.SouthWest:
+                    //Normal
+                    if (OpenSides[Direction.South] && OpenSides[Direction.West])
+                    {
+                        GameObject cornSW = Instantiate(PrefabCorner);
+                        cornSW.transform.parent = transform;
+                        cornSW.transform.Rotate(0, 270, 0);
+                    }
+                    else
+                    //Inner
+                    if (!OpenSides[Direction.South] && !OpenSides[Direction.West])
+                    {
+                        GameObject incorSW = Instantiate(PrefabInnerCorner);
+                        incorSW.transform.parent = transform;
+                        incorSW.transform.Rotate(0, 270, 0);
+                    }
+                    break;
+                case Direction.SouthEast:
+                    //Normal
+                    if (OpenSides[Direction.South] && OpenSides[Direction.East])
+                    {
+                        GameObject cornSE = Instantiate(PrefabCorner);
+                        cornSE.transform.parent = transform;
+                        cornSE.transform.Rotate(0, 0, 0);
+                    }
+                    else
+                    //Inner
+                    if (!OpenSides[Direction.South] && !OpenSides[Direction.East])
+                    {
+                        GameObject incorSE = Instantiate(PrefabInnerCorner);
+                        incorSE.transform.parent = transform;
+                        incorSE.transform.Rotate(0, 0, 0);
+                    }
+                    break;
             }
         }
-        else if (n == s && e == w && n != e)  //DOUBLE WALL
-        {
-            if (n == true)
-            {
-                gameObject.GetComponent<MeshFilter>().mesh = Mesh2WallsOpposing;
-                gameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0, 2) * 180, 0);
-            }
-            else
-            {
-                gameObject.GetComponent<MeshFilter>().mesh = Mesh2WallsOpposing;
-                gameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0, 2) * 180 + 90, 0);
-            }
-        }
-        else //OTHER STUFF
-        {
-            gameObject.GetComponent<MeshFilter>().mesh = Mesh4Walls;
-            gameObject.transform.rotation = Quaternion.Euler(0, Random.Range(0, 4) * 90, 0);
-        }
-
     }
 
-    public void UpdateAdjacent()
+        public void UpdateAdjacent()
     {
         foreach (TileBase Tile in AdjacentTiles)
         {
