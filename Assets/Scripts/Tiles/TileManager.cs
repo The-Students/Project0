@@ -182,74 +182,7 @@ public class TileManager : NetworkBehaviour
     //        }
     //    }
     //}
-    void Update ()
-    {
-        for (int y = MapSize - 1; y >= 0; --y)
-        {
-            for (int x = 0; x < MapSize; ++x)
-            {
-                if (TileScripts[x, y])
-                {
-                    if (TileScripts[x, y].GetIsDestroyed())
-                    {
-                        TileBase[] Adjacent = TileScripts[x, y].GetAdjacent();
-                        
-                        //TO-DO: MIGHT NOT WORK CHECK LATER
-                        var type = TileScripts[x, y].GetBreaksIntoTileType();
-                        string name = Tiles[x, y].name;
-                        Transform trans = Tiles[x, y].transform;
-
-                        Destroy(Tiles[x, y]);
-                        Tiles[x, y] = Instantiate(TileScripts[x, y].BreaksInto);
-
-                        Tiles[x, y].name = name;
-                        Tiles[x, y].transform.position = trans.position;
-                        Tiles[x, y].transform.localScale = trans.localScale;
-                        Tiles[x, y].transform.parent = transform;
-
-                        switch (type)
-                        {
-                            case TileTypes.Empty:
-                                TileScripts[x, y] = Tiles[x, y].GetComponent<TileDirt>();
-                                break;
-                            case TileTypes.Dirt:
-                                TileScripts[x, y] = Tiles[x, y].GetComponent<TileDirt>();
-                                break;
-                            case TileTypes.Rock:
-                                TileScripts[x, y] = Tiles[x, y].GetComponent<TileRock>();
-                                break;
-                            case TileTypes.Gem:
-                                TileScripts[x, y] = Tiles[x, y].GetComponent<TileGem>();
-                                break;
-                            case TileTypes.Path:
-                                TileScripts[x, y] = Tiles[x, y].GetComponent<TileFloor>();
-                                break;
-                            case TileTypes.Lava:
-                                TileScripts[x, y] = Tiles[x, y].GetComponent<TileLava>();
-                                break;
-                            case TileTypes.Water:
-                                TileScripts[x, y] = Tiles[x, y].GetComponent<TileWater>();
-                                break;
-                            case TileTypes.Building:
-                                TileScripts[x, y] = Tiles[x, y].GetComponent<TileBuilding>();
-                                break;
-                        }
-
-                        TileScripts[x, y].Initialize();
-
-                        if (Adjacent[(int)Direction.North]) TileScripts[x, y].SetAdjacent(Direction.North, Adjacent[(int)Direction.North]);
-                        if (Adjacent[(int)Direction.East]) TileScripts[x, y].SetAdjacent(Direction.East, Adjacent[(int)Direction.East]);
-                        if (Adjacent[(int)Direction.South]) TileScripts[x, y].SetAdjacent(Direction.South, Adjacent[(int)Direction.South]);
-                        if (Adjacent[(int)Direction.West]) TileScripts[x, y].SetAdjacent(Direction.West, Adjacent[(int)Direction.West]);
-                        if (Adjacent[(int)Direction.NorthWest]) TileScripts[x, y].SetAdjacent(Direction.NorthWest, Adjacent[(int)Direction.NorthWest]);
-                        if (Adjacent[(int)Direction.NorthEast]) TileScripts[x, y].SetAdjacent(Direction.NorthEast, Adjacent[(int)Direction.NorthEast]);
-                        if (Adjacent[(int)Direction.SouthEast]) TileScripts[x, y].SetAdjacent(Direction.SouthEast, Adjacent[(int)Direction.SouthEast]);
-                        if (Adjacent[(int)Direction.SouthWest]) TileScripts[x, y].SetAdjacent(Direction.SouthWest, Adjacent[(int)Direction.SouthWest]);
-                    }
-                }
-            }
-        }
-    }
+   
     public float GetMapSize()
     {
         return MapSize * TileSize;
