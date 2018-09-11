@@ -30,7 +30,6 @@ public class TileManager : NetworkBehaviour
 
     public void Initialize(int tilesize, string path)
     {
-        byte[] bytes = new byte[sizeof(int)];
         File = new FileStream(path, FileMode.Open);
         FileReader = new BinaryReader(File);
         
