@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TileBase : NetworkBehaviour {
     protected float HP = 1.0f;
-    protected TileTypes TileType = TileTypes.Empty;
+    protected TileTypes TileType;
     protected bool IsDestroyed = false;
     protected TileBase[] AdjacentTiles = new TileBase[8];
     protected bool IsFlat = false;
@@ -23,10 +23,10 @@ public class TileBase : NetworkBehaviour {
     // Use this for initialization
     void Start ()
     {
+        TileType = TileTypes.Empty;
     }
     public virtual void Initialize()
     {
-        TileType = TileTypes.Empty;
 	}
 
     void OnMouseDown()
@@ -211,11 +211,6 @@ public class TileBase : NetworkBehaviour {
     public bool GetIsFlat()
     {
         return IsFlat;
-    }
-
-    public TileTypes GetBreaksIntoTileType()
-    {
-        return BreaksInto.GetComponent<TileBase>().TileType;
     }
 
     public void SetAdjacent(Direction dir, TileBase tile)

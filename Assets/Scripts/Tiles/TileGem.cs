@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class TileGem : TileWallBase {
 
+    void Start()
+    {
+        TileType = TileTypes.Gem;
+    }
+
     // Use this for initialization
     public override void Initialize()
     {
         base.Initialize();
-        TileType = TileTypes.Gem;
     }
 
     // Update is called once per frame

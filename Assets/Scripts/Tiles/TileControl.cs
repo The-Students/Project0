@@ -30,50 +30,67 @@ public class TileControl : NetworkBehaviour {
                         TileBase[] Adjacent = _tileManager.TileScripts[x, y].GetAdjacent();
 
                         //TO-DO: MIGHT NOT WORK CHECK LATER
-                        var temp = _tileManager.Tiles[x, y];
+                        var name = _tileManager.Tiles[x, y].name;
+                        var pos = _tileManager.Tiles[x, y].transform.position;
+                        var rot = _tileManager.Tiles[x, y].transform.rotation;
+                        var scale = _tileManager.Tiles[x, y].transform.localScale;
+                        var parent = _tileManager.Tiles[x, y].transform.parent;
+
+                        Destroy(_tileManager.Tiles[x, y]);
+
                         _tileManager.Tiles[x, y] = Instantiate(_tileManager.TileScripts[x, y].BreaksInto);
-
-                        switch (_tileManager.TileScripts[x, y].GetBreaksIntoTileType())
-                        {
-                            case TileTypes.Empty:
-                                _tileManager.TileScripts[x, y] = _tileManager.Tiles[x, y].GetComponent<TileDirt>();
-                                break;
-                            case TileTypes.Dirt:
-                                _tileManager.TileScripts[x, y] = _tileManager.Tiles[x, y].GetComponent<TileDirt>();
-                                break;
-                            case TileTypes.Rock:
-                                _tileManager.TileScripts[x, y] = _tileManager.Tiles[x, y].GetComponent<TileRock>();
-                                break;
-                            case TileTypes.Gem:
-                                _tileManager.TileScripts[x, y] = _tileManager.Tiles[x, y].GetComponent<TileGem>();
-                                break;
-                            case TileTypes.Path:
-                                _tileManager.TileScripts[x, y] = _tileManager.Tiles[x, y].GetComponent<TileFloor>();
-                                break;
-                            case TileTypes.Lava:
-                                _tileManager.TileScripts[x, y] = _tileManager.Tiles[x, y].GetComponent<TileLava>();
-                                break;
-                            case TileTypes.Water:
-                                _tileManager.TileScripts[x, y] = _tileManager.Tiles[x, y].GetComponent<TileWater>();
-                                break;
-                            case TileTypes.Building:
-                                _tileManager.TileScripts[x, y] = _tileManager.Tiles[x, y].GetComponent<TileBuilding>();
-                                break;
-                        }
-
-                        //Check later
-                        Destroy(temp);
+                        _tileManager.Tiles[x, y].transform.parent = parent;
+                        _tileManager.Tiles[x, y].name = name;
+                        _tileManager.Tiles[x, y].transform.position = pos;
+                        _tileManager.Tiles[x, y].transform.rotation = rot;
+                        _tileManager.Tiles[x, y].transform.localScale = scale;
                         
+                        _tileManager.TileScripts[x, y] = _tileManager.Tiles[x, y].GetComponent<TileBase>();
                         _tileManager.TileScripts[x, y].Initialize();
 
-                        if (Adjacent[(int)Direction.North]) _tileManager.TileScripts[x, y].SetAdjacent(Direction.North, Adjacent[(int)Direction.North]);
-                        if (Adjacent[(int)Direction.East]) _tileManager.TileScripts[x, y].SetAdjacent(Direction.East, Adjacent[(int)Direction.East]);
-                        if (Adjacent[(int)Direction.South]) _tileManager.TileScripts[x, y].SetAdjacent(Direction.South, Adjacent[(int)Direction.South]);
-                        if (Adjacent[(int)Direction.West]) _tileManager.TileScripts[x, y].SetAdjacent(Direction.West, Adjacent[(int)Direction.West]);
-                        if (Adjacent[(int)Direction.NorthWest]) _tileManager.TileScripts[x, y].SetAdjacent(Direction.NorthWest, Adjacent[(int)Direction.NorthWest]);
-                        if (Adjacent[(int)Direction.NorthEast]) _tileManager.TileScripts[x, y].SetAdjacent(Direction.NorthEast, Adjacent[(int)Direction.NorthEast]);
-                        if (Adjacent[(int)Direction.SouthEast]) _tileManager.TileScripts[x, y].SetAdjacent(Direction.SouthEast, Adjacent[(int)Direction.SouthEast]);
-                        if (Adjacent[(int)Direction.SouthWest]) _tileManager.TileScripts[x, y].SetAdjacent(Direction.SouthWest, Adjacent[(int)Direction.SouthWest]);
+                        if (Adjacent[(int)Direction.North])
+                        {
+                            _tileManager.TileScripts[x, y].SetAdjacent(Direction.North, Adjacent[(int)Direction.North]);
+                            Adjacent[(int)Direction.North].SetAdjacent(Direction.South, _tileManager.TileScripts[x, y]);
+                        }
+                        if (Adjacent[(int)Direction.East])
+                        {
+                            _tileManager.TileScripts[x, y].SetAdjacent(Direction.East, Adjacent[(int)Direction.East]);
+                            Adjacent[(int)Direction.East].SetAdjacent(Direction.West, _tileManager.TileScripts[x, y]);
+                        }
+                        if (Adjacent[(int)Direction.South])
+                        {
+                            _tileManager.TileScripts[x, y].SetAdjacent(Direction.South, Adjacent[(int)Direction.South]);
+                            Adjacent[(int)Direction.South].SetAdjacent(Direction.North, _tileManager.TileScripts[x, y]);
+                        }
+                        if (Adjacent[(int)Direction.West])
+                        {
+                            _tileManager.TileScripts[x, y].SetAdjacent(Direction.West, Adjacent[(int)Direction.West]);
+                            Adjacent[(int)Direction.West].SetAdjacent(Direction.East, _tileManager.TileScripts[x, y]);
+                        }
+                        if (Adjacent[(int)Direction.NorthWest])
+                        {
+                            _tileManager.TileScripts[x, y].SetAdjacent(Direction.NorthWest, Adjacent[(int)Direction.NorthWest]);
+                            Adjacent[(int)Direction.NorthWest].SetAdjacent(Direction.SouthEast, _tileManager.TileScripts[x, y]);
+                        }
+                        if (Adjacent[(int)Direction.NorthEast])
+                        {
+                            _tileManager.TileScripts[x, y].SetAdjacent(Direction.NorthEast, Adjacent[(int)Direction.NorthEast]);
+                            Adjacent[(int)Direction.NorthEast].SetAdjacent(Direction.SouthWest, _tileManager.TileScripts[x, y]);
+                        }
+                        if (Adjacent[(int)Direction.SouthEast])
+                        {
+                            _tileManager.TileScripts[x, y].SetAdjacent(Direction.SouthEast, Adjacent[(int)Direction.SouthEast]);
+                            Adjacent[(int)Direction.SouthEast].SetAdjacent(Direction.NorthWest, _tileManager.TileScripts[x, y]);
+                        }
+                        if (Adjacent[(int)Direction.SouthWest])
+                        {
+                            _tileManager.TileScripts[x, y].SetAdjacent(Direction.SouthWest, Adjacent[(int)Direction.SouthWest]);
+                            Adjacent[(int)Direction.SouthWest].SetAdjacent(Direction.NorthEast, _tileManager.TileScripts[x, y]);
+                        }
+
+                        _tileManager.TileScripts[x, y].UpdateMesh();
+                        _tileManager.TileScripts[x, y].UpdateAdjacent();
                     }
                 }
             }
