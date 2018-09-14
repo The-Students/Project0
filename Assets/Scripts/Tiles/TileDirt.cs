@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class TileDirt : TileWallBase {
 
+    void Start()
+    {
+        TileType = TileTypes.Dirt;
+    }
+
     // Use this for initialization
     public override void Initialize()
     {
         base.Initialize();
-        TileType = TileTypes.Dirt;
     }
 
     // Update is called once per frame

@@ -17,11 +17,15 @@ public class TileBuilding : TileBase {
 
     protected BuildingType _buildingType;
 
+    void Start()
+    {
+        TileType = TileTypes.Building;
+    }
+
     // Use this for initialization
     public override void Initialize()
     {
         base.Initialize();
-        TileType = TileTypes.Building;
     }
 
     // Update is called once per frame

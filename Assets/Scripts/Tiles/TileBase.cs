@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TileBase : NetworkBehaviour {
     protected float HP = 1.0f;
-    protected TileTypes TileType = TileTypes.Empty;
+    protected TileTypes TileType;
     protected bool IsDestroyed = false;
     protected TileBase[] AdjacentTiles = new TileBase[8];
     protected bool IsFlat = false;
@@ -23,14 +23,19 @@ public class TileBase : NetworkBehaviour {
     // Use this for initialization
     void Start ()
     {
+        TileType = TileTypes.Empty;
     }
     public virtual void Initialize()
     {
-        TileType = TileTypes.Empty;
 	}
 
-	// Update is called once per frame
-	void Update ()
+    void OnMouseDown()
+    {
+        TakeDamage(999.0f);
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
 		
 	}
@@ -208,11 +213,6 @@ public class TileBase : NetworkBehaviour {
         return IsFlat;
     }
 
-    public TileTypes GetBreaksIntoTileType()
-    {
-        return BreaksInto.GetComponent<TileBase>().TileType;
-    }
-
     public void SetAdjacent(Direction dir, TileBase tile)
     {
         AdjacentTiles[(int)dir] = tile;
@@ -224,8 +224,16 @@ public class TileBase : NetworkBehaviour {
 
     private void SetPart(ref GameObject obj)
     {
-        obj.transform.position.Scale(transform.localScale);
-        obj.transform.localScale.Scale(transform.localScale);
+        //Temp can be deleted later
+        Vector3 temp = obj.transform.position;
+        temp.Scale(transform.localScale);
+        obj.transform.position = temp;
+        ///////////////////////////
+
+        temp = obj.transform.localScale;
+        temp.Scale(transform.localScale);
+        obj.transform.localScale = temp;
+
         obj.transform.position += transform.position;
         obj.transform.parent = transform;
     }

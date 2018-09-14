@@ -5,13 +5,12 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour {
     BinaryWriter FileWriter;
-    FileStream File;
     System.Int16[,] Map;
-
+    public FileStream File;
 	// Use this for initialization
 	void Start ()
     {
-        File = new FileStream("Assets/Maps/Map.bin", FileMode.Create);
+        //File = new FileStream("Assets/Maps/Map.bin", FileMode.Create);
         FileWriter = new BinaryWriter(File);
 
         System.Int16 size = 50;

@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class TileFloor : TileFlatBase {
 
+    void Start()
+    {
+        TileType = TileTypes.Path;
+    }
+
     // Use this for initialization
     public override void Initialize()
     {
         base.Initialize();
-        TileType = TileTypes.Path;
 	}
 	
 	// Update is called once per frame
