@@ -10,7 +10,7 @@ public class MapGenerator : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        //File = new FileStream("Assets/Maps/Map.bin", FileMode.Create);
+        //File = new FileStream("Assets/Maps/Map.bytes", FileMode.Create);
         FileWriter = new BinaryWriter(File);
 
         System.Int16 size = 50;

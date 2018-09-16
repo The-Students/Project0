@@ -9,44 +9,44 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1964034450974092}
+  m_RootGameObject: {fileID: 1018928861139500}
   m_IsPrefabAsset: 1
---- !u!1 &1964034450974092
+--- !u!1 &1018928861139500
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4519525852788022}
-  - component: {fileID: 114696655639085276}
-  - component: {fileID: 114396783792946534}
+  - component: {fileID: 4154964781209206}
+  - component: {fileID: 114614980338870410}
+  - component: {fileID: 114777694344190512}
   m_Layer: 0
   m_Name: TileManager
-  m_TagString: Untagged
+  m_TagString: TileManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4519525852788022
+--- !u!4 &4154964781209206
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1964034450974092}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 1018928861139500}
+  m_LocalRotation: {x: 0.46174863, y: -0, z: -0, w: 0.8870109}
+  m_LocalPosition: {x: 0, y: 50, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114396783792946534
+--- !u!114 &114614980338870410
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1964034450974092}
+  m_GameObject: {fileID: 1018928861139500}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
@@ -55,41 +55,37 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 111
-    i1: 130
-    i2: 179
-    i3: 219
-    i4: 157
-    i5: 138
-    i6: 246
+    i0: 171
+    i1: 148
+    i2: 65
+    i3: 45
+    i4: 172
+    i5: 166
+    i6: 109
     i7: 148
-    i8: 153
-    i9: 154
-    i10: 194
-    i11: 200
-    i12: 164
-    i13: 190
-    i14: 36
-    i15: 190
+    i8: 10
+    i9: 218
+    i10: 20
+    i11: 61
+    i12: 205
+    i13: 73
+    i14: 217
+    i15: 20
   m_ServerOnly: 1
   m_LocalPlayerAuthority: 0
---- !u!114 &114696655639085276
+--- !u!114 &114777694344190512
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1964034450974092}
+  m_GameObject: {fileID: 1018928861139500}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61b4c7087478bed439bf3a126440799d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PrefabDirt: {fileID: 1100424225270532, guid: 575102e37d49ce848a254111140fdb49, type: 2}
-  PrefabRock: {fileID: 1405359973330952, guid: fc4285ef8e2c3da40a32af7bd52a23f3, type: 2}
-  PrefabGem: {fileID: 1934580106688332, guid: 372626e8a0e71cf409d4f91daf49b645, type: 2}
-  PrefabWater: {fileID: 1331636991873880, guid: 258f1c04a6bff4c47a6a3878fe1a747f,
-    type: 2}
-  PrefabLava: {fileID: 1921820318846156, guid: 0b2a40e3466be90489e20f785d07f587, type: 2}
-  PrefabPath: {fileID: 1826708721588372, guid: 40da8001aa3a7fe4987d7810700853e4, type: 2}
-  PrefabRoom: {fileID: 1207869815117850, guid: 65042e0d8826f884ba8ba254846dc0f0, type: 2}
-  FileAsset: {fileID: 4900000, guid: 11ea9c30485c8614f818d8fc773e9aa3, type: 3}
+  Tiles: []
+  TileScripts: []
+  MapSize: 50
+  TileSize: 10
+  _networkCommand: {fileID: 0}

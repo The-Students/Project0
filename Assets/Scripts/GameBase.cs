@@ -9,7 +9,7 @@ public class GameBase : NetworkBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        tileManager.Initialize(10, "Assets/Maps/Map.bin");
+        tileManager.Initialize();
 	}
 	
 	// Update is called once per frame

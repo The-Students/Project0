@@ -11,6 +11,7 @@ public class TileBase : NetworkBehaviour {
     protected bool IsFlat = false;
     protected Dictionary<Direction, bool> OpenSides = new Dictionary<Direction, bool>();
 
+    public NetworkCommands _networkCommands;
 
     public GameObject PrefabWall;
     public GameObject PrefabCorner;
@@ -49,8 +50,13 @@ public class TileBase : NetworkBehaviour {
         }
 
         //ADD TOP
-        GameObject top = Instantiate(PrefabTop);
-        SetPart(ref top);
+        if (isServer)
+        {
+            PrefabTop = Instantiate(PrefabTop);
+            NetworkServer.Spawn(PrefabTop);
+        }
+
+        SetPart(ref PrefabTop);
 
         foreach (KeyValuePair<Direction, bool> Side in OpenSides)
         {
@@ -174,7 +180,7 @@ public class TileBase : NetworkBehaviour {
         }
     }
 
-        public void UpdateAdjacent()
+    public void UpdateAdjacent()
     {
         foreach (TileBase Tile in AdjacentTiles)
         {

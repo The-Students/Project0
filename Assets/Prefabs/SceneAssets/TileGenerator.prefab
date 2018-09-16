@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1069276773597776}
+  m_IsPrefabAsset: 1
+--- !u!1 &1069276773597776
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4168987057940732}
+  - component: {fileID: 114845466236961466}
+  - component: {fileID: 114328318443059492}
+  m_Layer: 0
+  m_Name: TileGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4168987057940732
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1069276773597776}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -197.04575, y: 147.72826, z: -116.83869}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114328318443059492
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1069276773597776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f90c4fb5604ebd14cb752100d3d634d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TileSize: 10
+  _networkCommand: {fileID: 0}
+  PrefabDirt: {fileID: 1100424225270532, guid: 575102e37d49ce848a254111140fdb49, type: 2}
+  PrefabRock: {fileID: 1405359973330952, guid: fc4285ef8e2c3da40a32af7bd52a23f3, type: 2}
+  PrefabGem: {fileID: 1934580106688332, guid: 372626e8a0e71cf409d4f91daf49b645, type: 2}
+  PrefabWater: {fileID: 1331636991873880, guid: 258f1c04a6bff4c47a6a3878fe1a747f,
+    type: 2}
+  PrefabLava: {fileID: 1921820318846156, guid: 0b2a40e3466be90489e20f785d07f587, type: 2}
+  PrefabPath: {fileID: 1826708721588372, guid: 40da8001aa3a7fe4987d7810700853e4, type: 2}
+  PrefabRoom: {fileID: 1207869815117850, guid: 65042e0d8826f884ba8ba254846dc0f0, type: 2}
+  FileAsset: {fileID: 4900000, guid: 5b8b7dcb98e84bd428698b2a04c09f29, type: 3}
+--- !u!114 &114845466236961466
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1069276773597776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 178
+    i1: 73
+    i2: 200
+    i3: 50
+    i4: 63
+    i5: 92
+    i6: 230
+    i7: 132
+    i8: 219
+    i9: 211
+    i10: 7
+    i11: 250
+    i12: 205
+    i13: 64
+    i14: 244
+    i15: 143
+  m_ServerOnly: 1
+  m_LocalPlayerAuthority: 0

@@ -7,15 +7,22 @@ using System.Text;
 
 public class TileManager : NetworkBehaviour
 {
+    public GameObject[,] Tiles;
 
-    public GameObject[,] Tiles { get; set; }
-    public TileBase[,] TileScripts { get; set; }
+    public TileBase[,] TileScripts;
+
+    [SerializeField]
     private int MapSize;
+    [SerializeField]
     private float TileSize;
+
     private BinaryReader FileReader;
     private FileStream File;
 
-    
+    [SerializeField]
+    protected NetworkCommands _networkCommand;
+
+
     public GameObject PrefabDirt;
     public GameObject PrefabRock;
     public GameObject PrefabGem;
@@ -29,18 +36,21 @@ public class TileManager : NetworkBehaviour
     // Use this for initialization
     void Start ()
     {
-		
+        
 	}
 
-    public void Initialize(int tilesize, string path)
+
+    public void Initialize()
     {
-        //File = new FileStream(FileAsset, FileMode.Open);
+        if (!isServer)
+        {
+            return;
+        }
         MemoryStream mStrm = new MemoryStream(Encoding.UTF8.GetBytes(FileAsset.text));
         FileReader = new BinaryReader(mStrm);
-        
-        MapSize = FileReader.ReadInt16();
-        TileSize = tilesize;
-        
+
+        //MapSize = FileReader.ReadInt16();
+
         Tiles = new GameObject[MapSize, MapSize];
         TileScripts = new TileBase[MapSize, MapSize];
 
@@ -85,11 +95,20 @@ public class TileManager : NetworkBehaviour
                         TileScripts[x, y] = Tiles[x, y].GetComponent<TileDirt>();
                         break;
                 }
+                NetworkServer.Spawn(Tiles[x, y]);
+                //if (!isServer)
+                //{
+                //    _networkCommand.CmdNetworkSpawn(Tiles[x, y]);
+                //}
+                //else
+                //{
+                //    NetworkServer.Spawn(Tiles[x, y]);
+                //}
                 TileScripts[x, y].Initialize();
                 Tiles[x, y].name = "TileX" + x + "Y" + y;
-                Tiles[x, y].transform.Translate((x - (MapSize / 2.0f)) * tilesize, 0.0f, (y - (MapSize / 2.0f)) * tilesize);
-                Tiles[x, y].transform.localScale = new Vector3(tilesize, tilesize, tilesize);
-                Tiles[x, y].transform.parent = GameObject.FindGameObjectWithTag("TileManager").transform;
+                Tiles[x, y].transform.Translate((x - (MapSize / 2.0f)) * TileSize, 0.0f, (y - (MapSize / 2.0f)) * TileSize);
+                Tiles[x, y].transform.localScale = new Vector3(TileSize, TileSize, TileSize);
+                //Tiles[x, y].transform.parent = GameObject.FindGameObjectWithTag("TileManager").transform;
             }
         }
 
@@ -119,70 +138,98 @@ public class TileManager : NetworkBehaviour
         }
     }
 
-    // Update is called once per frame
-    //void Update ()
-    //{
-    //    for (int y = MapSize - 1; y >= 0; --y)
-    //    {
-    //        for (int x = 0; x < MapSize; ++x)
-    //        {
-    //            if (TileScripts[x, y])
-    //            {
-    //                if (TileScripts[x, y].GetIsDestroyed())
-    //                {
-    //                    TileBase[] Adjacent = TileScripts[x, y].GetAdjacent();
+    void Update()
+    {
+        for (int y = MapSize - 1; y >= 0; --y)
+        {
+            for (int x = 0; x < MapSize; ++x)
+            {
+                if (Tiles == null)
+                {
+                    Debug.Log(x + ", " + y);
+                    return;
+                }
+                if (Tiles[x, y] != null)
+                {
+                    if (TileScripts[x, y].GetIsDestroyed())
+                    {
+                        TileBase[] Adjacent = TileScripts[x, y].GetAdjacent();
 
-    //                    //TO-DO: MIGHT NOT WORK CHECK LATER
-    //                    var temp = Tiles[x, y];
-    //                    Tiles[x, y] = Instantiate(TileScripts[x, y].BreaksInto);
+                        //TO-DO: MIGHT NOT WORK CHECK LATER
+                        var name = Tiles[x, y].name;
+                        var pos = Tiles[x, y].transform.position;
+                        var rot = Tiles[x, y].transform.rotation;
+                        var scale = Tiles[x, y].transform.localScale;
+                        var parent = Tiles[x, y].transform.parent;
 
-    //                    switch (TileScripts[x, y].GetBreaksIntoTileType())
-    //                    {
-    //                        case TileTypes.Empty:
-    //                            TileScripts[x, y] = Tiles[x, y].GetComponent<TileDirt>();
-    //                            break;
-    //                        case TileTypes.Dirt:
-    //                            TileScripts[x, y] = Tiles[x, y].GetComponent<TileDirt>();
-    //                            break;
-    //                        case TileTypes.Rock:
-    //                            TileScripts[x, y] = Tiles[x, y].GetComponent<TileRock>();
-    //                            break;
-    //                        case TileTypes.Gem:
-    //                            TileScripts[x, y] = Tiles[x, y].GetComponent<TileGem>();
-    //                            break;
-    //                        case TileTypes.Path:
-    //                            TileScripts[x, y] = Tiles[x, y].GetComponent<TileFloor>();
-    //                            break;
-    //                        case TileTypes.Lava:
-    //                            TileScripts[x, y] = Tiles[x, y].GetComponent<TileLava>();
-    //                            break;
-    //                        case TileTypes.Water:
-    //                            TileScripts[x, y] = Tiles[x, y].GetComponent<TileWater>();
-    //                            break;
-    //                        case TileTypes.Building:
-    //                            TileScripts[x, y] = Tiles[x, y].GetComponent<TileBuilding>();
-    //                            break;
-    //                    }
+                        if (!isServer)
+                        {
+                            _networkCommand.CmdNetworkDestroy(Tiles[x, y]);
+                        }
+                        else
+                        {
+                            NetworkServer.Destroy(Tiles[x, y]);
+                        }
 
-    //                    //Check later
-    //                    Destroy(temp);
+                        Tiles[x, y] = Instantiate(TileScripts[x, y].BreaksInto);
+                        Tiles[x, y].transform.parent = parent;
+                        Tiles[x, y].name = name;
+                        Tiles[x, y].transform.position = pos;
+                        Tiles[x, y].transform.rotation = rot;
+                        Tiles[x, y].transform.localScale = scale;
 
-    //                    TileScripts[x, y].Initialize();
+                        TileScripts[x, y] = Tiles[x, y].GetComponent<TileBase>();
+                        TileScripts[x, y].Initialize();
 
-    //                    if (Adjacent[(int)Direction.North]) TileScripts[x, y].SetAdjacent(Direction.North, Adjacent[(int)Direction.North]);
-    //                    if (Adjacent[(int)Direction.East]) TileScripts[x, y].SetAdjacent(Direction.East, Adjacent[(int)Direction.East]);
-    //                    if (Adjacent[(int)Direction.South]) TileScripts[x, y].SetAdjacent(Direction.South, Adjacent[(int)Direction.South]);
-    //                    if (Adjacent[(int)Direction.West]) TileScripts[x, y].SetAdjacent(Direction.West, Adjacent[(int)Direction.West]);
-    //                    if (Adjacent[(int)Direction.NorthWest]) TileScripts[x, y].SetAdjacent(Direction.NorthWest, Adjacent[(int)Direction.NorthWest]);
-    //                    if (Adjacent[(int)Direction.NorthEast]) TileScripts[x, y].SetAdjacent(Direction.NorthEast, Adjacent[(int)Direction.NorthEast]);
-    //                    if (Adjacent[(int)Direction.SouthEast]) TileScripts[x, y].SetAdjacent(Direction.SouthEast, Adjacent[(int)Direction.SouthEast]);
-    //                    if (Adjacent[(int)Direction.SouthWest]) TileScripts[x, y].SetAdjacent(Direction.SouthWest, Adjacent[(int)Direction.SouthWest]);
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
-   
+                        if (Adjacent[(int)Direction.North])
+                        {
+                            TileScripts[x, y].SetAdjacent(Direction.North, Adjacent[(int)Direction.North]);
+                            Adjacent[(int)Direction.North].SetAdjacent(Direction.South, TileScripts[x, y]);
+                        }
+                        if (Adjacent[(int)Direction.East])
+                        {
+                            TileScripts[x, y].SetAdjacent(Direction.East, Adjacent[(int)Direction.East]);
+                            Adjacent[(int)Direction.East].SetAdjacent(Direction.West, TileScripts[x, y]);
+                        }
+                        if (Adjacent[(int)Direction.South])
+                        {
+                            TileScripts[x, y].SetAdjacent(Direction.South, Adjacent[(int)Direction.South]);
+                            Adjacent[(int)Direction.South].SetAdjacent(Direction.North, TileScripts[x, y]);
+                        }
+                        if (Adjacent[(int)Direction.West])
+                        {
+                            TileScripts[x, y].SetAdjacent(Direction.West, Adjacent[(int)Direction.West]);
+                            Adjacent[(int)Direction.West].SetAdjacent(Direction.East, TileScripts[x, y]);
+                        }
+                        if (Adjacent[(int)Direction.NorthWest])
+                        {
+                            TileScripts[x, y].SetAdjacent(Direction.NorthWest, Adjacent[(int)Direction.NorthWest]);
+                            Adjacent[(int)Direction.NorthWest].SetAdjacent(Direction.SouthEast, TileScripts[x, y]);
+                        }
+                        if (Adjacent[(int)Direction.NorthEast])
+                        {
+                            TileScripts[x, y].SetAdjacent(Direction.NorthEast, Adjacent[(int)Direction.NorthEast]);
+                            Adjacent[(int)Direction.NorthEast].SetAdjacent(Direction.SouthWest, TileScripts[x, y]);
+                        }
+                        if (Adjacent[(int)Direction.SouthEast])
+                        {
+                            TileScripts[x, y].SetAdjacent(Direction.SouthEast, Adjacent[(int)Direction.SouthEast]);
+                            Adjacent[(int)Direction.SouthEast].SetAdjacent(Direction.NorthWest, TileScripts[x, y]);
+                        }
+                        if (Adjacent[(int)Direction.SouthWest])
+                        {
+                            TileScripts[x, y].SetAdjacent(Direction.SouthWest, Adjacent[(int)Direction.SouthWest]);
+                            Adjacent[(int)Direction.SouthWest].SetAdjacent(Direction.NorthEast, TileScripts[x, y]);
+                        }
+
+                        TileScripts[x, y].UpdateMesh();
+                        TileScripts[x, y].UpdateAdjacent();
+                    }
+                }
+            }
+        }
+    }
+
     public float GetMapSize()
     {
         return MapSize * TileSize;
