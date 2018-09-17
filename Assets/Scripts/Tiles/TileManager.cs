@@ -95,7 +95,7 @@ public class TileManager : NetworkBehaviour
                         TileScripts[x, y] = Tiles[x, y].GetComponent<TileDirt>();
                         break;
                 }
-                NetworkServer.Spawn(Tiles[x, y]);
+
                 //if (!isServer)
                 //{
                 //    _networkCommand.CmdNetworkSpawn(Tiles[x, y]);
@@ -109,6 +109,7 @@ public class TileManager : NetworkBehaviour
                 Tiles[x, y].transform.Translate((x - (MapSize / 2.0f)) * TileSize, 0.0f, (y - (MapSize / 2.0f)) * TileSize);
                 Tiles[x, y].transform.localScale = new Vector3(TileSize, TileSize, TileSize);
                 //Tiles[x, y].transform.parent = GameObject.FindGameObjectWithTag("TileManager").transform;
+                
             }
         }
 
@@ -135,6 +136,12 @@ public class TileManager : NetworkBehaviour
         foreach (TileBase Tile in TileScripts)
         {
             Tile.UpdateMesh();
+            
+        }
+
+        foreach (var Tile in Tiles)
+        {
+            NetworkServer.Spawn(Tile);
         }
     }
 

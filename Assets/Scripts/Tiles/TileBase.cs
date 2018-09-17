@@ -50,13 +50,10 @@ public class TileBase : NetworkBehaviour {
         }
 
         //ADD TOP
-        if (isServer)
-        {
-            PrefabTop = Instantiate(PrefabTop);
-            NetworkServer.Spawn(PrefabTop);
-        }
 
+        PrefabTop = Instantiate(PrefabTop);
         SetPart(ref PrefabTop);
+        NetworkServer.Spawn(PrefabTop);
 
         foreach (KeyValuePair<Direction, bool> Side in OpenSides)
         {
