@@ -16,7 +16,4 @@ public class TileGem : TileWallBase {
     }
 
     // Update is called once per frame
-    void Update () {
-		
-	}
 }

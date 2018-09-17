@@ -21,6 +21,7 @@ public class TileBase : NetworkBehaviour {
     public GameObject BreaksInto;
 
 
+
     // Use this for initialization
     void Start ()
     {
@@ -28,6 +29,7 @@ public class TileBase : NetworkBehaviour {
     }
     public virtual void Initialize()
     {
+        _networkCommands = GameObject.Find("Root").GetComponent<NetworkCommands>();
 	}
 
     void OnMouseDown()
@@ -36,10 +38,9 @@ public class TileBase : NetworkBehaviour {
     }
 
     // Update is called once per frame
-    void Update ()
+    protected virtual void Update ()
     {
-		
-	}
+    }
 
     public virtual void UpdateMesh()
     {
@@ -51,9 +52,10 @@ public class TileBase : NetworkBehaviour {
 
         //ADD TOP
 
-        PrefabTop = Instantiate(PrefabTop);
-        SetPart(ref PrefabTop);
+        PrefabTop = Instantiate(PrefabTop,transform);
         NetworkServer.Spawn(PrefabTop);
+        //SetPart(ref PrefabTop);
+        //_networkCommands.RpcSyncObjectOnce(PrefabTop.transform.localPosition, PrefabTop.transform.localRotation, top, gameObject);
 
         foreach (KeyValuePair<Direction, bool> Side in OpenSides)
         {
@@ -238,6 +240,6 @@ public class TileBase : NetworkBehaviour {
         obj.transform.localScale = temp;
 
         obj.transform.position += transform.position;
-        obj.transform.parent = transform;
+        //obj.transform.parent = transform;
     }
 }

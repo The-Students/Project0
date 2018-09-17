@@ -16,7 +16,4 @@ public class TileFloor : TileFlatBase {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
 }

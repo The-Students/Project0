@@ -15,7 +15,4 @@ public class TileRock : TileWallBase {
     }
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
 }

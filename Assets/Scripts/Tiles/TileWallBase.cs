@@ -12,7 +12,4 @@ public class TileWallBase : TileBase {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
 }
