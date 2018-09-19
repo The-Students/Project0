@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4043075424692016}
+  - component: {fileID: 114150987072897260}
   m_Layer: 0
   m_Name: EmptyPrefab
   m_TagString: Untagged
@@ -39,3 +40,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114150987072897260
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1829980776730174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 107
+    i1: 94
+    i2: 199
+    i3: 252
+    i4: 185
+    i5: 29
+    i6: 80
+    i7: 228
+    i8: 89
+    i9: 186
+    i10: 64
+    i11: 194
+    i12: 165
+    i13: 31
+    i14: 13
+    i15: 184
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0

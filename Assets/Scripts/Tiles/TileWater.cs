@@ -16,7 +16,4 @@ public class TileWater : TileLiquidBase {
     }
 
     // Update is called once per frame
-    void Update () {
-		
-	}
 }

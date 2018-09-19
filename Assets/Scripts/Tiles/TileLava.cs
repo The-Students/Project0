@@ -15,7 +15,4 @@ public class TileLava : TileLiquidBase {
     }
 
     // Update is called once per frame
-    void Update () {
-		
-	}
 }

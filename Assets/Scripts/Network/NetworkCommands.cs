@@ -16,4 +16,28 @@ public class NetworkCommands :  NetworkBehaviour
     {
         NetworkServer.Spawn(gameObj);
     }
+
+    [ClientRpc]
+    public void RpcSyncObjectOnce(Vector3 localPos, Quaternion localRot, GameObject obj, GameObject parent)
+    {
+        if (obj == null || parent == null)
+        {
+            return;
+        }
+        obj.transform.parent = parent.transform;
+        obj.transform.localPosition = localPos;
+        obj.transform.localRotation = localRot;
+    }
+
+    [ClientRpc]
+    public void RpcSyncObjectNameOnce(Vector3 localPos, Quaternion localRot, GameObject obj, string name)
+    {
+        if (obj == null)
+        {
+            return;
+        }
+        obj.name = name;
+        obj.transform.localPosition = localPos;
+        obj.transform.localRotation = localRot;
+    }
 }
